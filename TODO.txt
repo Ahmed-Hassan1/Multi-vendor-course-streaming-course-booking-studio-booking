@@ -1,0 +1,37 @@
+Home page:
+    highlight  image/crs at the top DONE
+    Random selection of products to show (hori scroll section) DONE
+    Section cards inside the body
+    Random/new addiction for each section (hori scroll section) DONE
+    Footer
+
+General Product page:
+    Hero Image 
+    Random selection of each  sub-product to show (hori scroll section)
+    Cards for each sub products
+
+Sub-Product page:
+    Top pics (hori scroll section)
+    List all items as cards (vert scroll, pagination)
+    Filter section
+
+Item page:
+    Images of the product
+    Price
+    Description
+    Related products (hori scroll section)
+
+Cart page:
+
+Checkout page:
+
+
+Hori scroll section:
+    small crs box with a title and a link to see all
+    inisde is a selection of cards
+    The link goes to the related product
+
+NOTES:
+CARD inner in grid system with fr
+Section sizing presentable on mobile sizes
+BOx SHADOWS
