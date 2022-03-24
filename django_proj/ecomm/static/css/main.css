@@ -1,4 +1,4 @@
-a{
+/* a{
     text-decoration: none;
 }
 
@@ -30,7 +30,7 @@ a{
 }
 
 .oud-background{
-    background-image: url("{% static 'css/bg.jpg' %}");
+    background-image: url("oud1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -45,4 +45,61 @@ a{
     bottom: 0;
     padding: 0 !important;
     margin: 0 !important;
+} */
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+h2{
+    margin: 0;
+    padding: 5px;
+}
+
+.of{
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.image-top-view{
+    width: 80vw;
+    height: 40vw;
+}
+
+.section-size{
+    height: 40vw;
+}
+
+.itm{
+    max-width: 40%;
+    min-width: 40%;
+}
+
+.itm-50pc{
+    max-width: 50%;
+    min-width: 50%;
+}
+
+.scroll{
+    -webkit-overflow-scrolling: touch;
+}
+
+.gnrl-section-size{
+    height: 70vh;
+}
+
+.anim-card{
+    animation: appear 2.5s forwards;
+}
+
+@keyframes appear{
+    from{
+        clip-path: circle(7.2% at 50% 50%);
+
+    }
+    to{
+        clip-path: circle(70.7% at 50% 50%);
+
+    }
 }

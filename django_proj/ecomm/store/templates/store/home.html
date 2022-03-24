@@ -2,293 +2,153 @@
 {% load static %}
 
 {% block content %}
+<div class="d-flex flex-column">
+  <!-- <a href="testing.html" class="btn btn-outline-dark">Style 1</a>
+  <a href="testing2.html" class="btn btn-outline-dark">Style 2</a> -->
 
-<!-- Hero Image and Highlightes stuff -->
+  <!-- Banner/carousell at top -->
+  <div>
+    <div class="d-flex of scroll">
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
+        </a>
+      </div>
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
+        </a>
+      </div>
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
+        </a>
+      </div>
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
+        </a>
+      </div>
+      
+    </div>
+    
 
-    <div class="background-image">
-      <div class="container-fluid layer">
-        <h1 class="display-3 text-white">Hello, world!</h1>
-        <p class="text-white">Test for anything goes here.</p>
-        <p><a class="btn btn-secondary btn-lg" href="#" role="button">Learn more »</a></p>
+  </div>
+
+  <!-- Single section Carousel -->
+  <div class="m-2 scroll">
+    <!-- header -->
+    <div style="background-color: rgb(196, 192, 192);">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="text-center">New</h2>
+        <a class="p-2" href="#">SEE ALL</a>
       </div>
     </div>
 
+    <!-- items -->
+    <div class="d-flex of">
 
-  <!-- Services or a highlighted product -->
-  <!-- Can be improved using a Card component -->
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
 
-    <div class="mb-5 mt-5 d-flex flex-column align-items-center">
-      <div class="mb-3 d-flex flex-column align-items-center">
-        <h2>Highlighted Product</h4>
-        <p class="text-center">Brief explanation of the products that are highlighted</p>
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3 class="text-center">Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
+      </div>
+
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="#">
+          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
+          <h3>Name</h3>
+          <div>Price</div>
+        </a>
       </div>
     </div>
+  </div>
 
-
-    <div class="row">
-
-      <div  class="col-md-4 card justify-content-center">
-        <img class="" src="{% static 'images/guitar1.jpg' %}" alt="">
-        <div style="background-color: rgba(50,50,50, 0.3);" class="card-img-overlay d-flex justify-content-center">
-          <h5 class="card-title display-4 d-flex align-items-center text-white "> <span>Guitars</span> </h5>
-        </div>
-      </div>
-
-      <div class="col-md-4 card justify-content-center">
-        <img class="card-img" src="{% static 'images/oud2.jpg' %}" alt="">
-        <div style="background-color: rgba(50, 50, 50, 0.3);" class="card-img-overlay d-flex justify-content-center">
-          <h5 class="card-title display-4 d-flex align-items-center text-white"> <span>OUDS</span> </h5>
-        </div>
-      </div>
-
-      <div  class="col-md-4 card justify-content-center">
-        <img class="card-img" src="{% static 'images/guitar2.jpg' %}" alt="">
-        <div style="background-color: rgba(50, 50, 50, 0.3);" class="card-img-overlay d-flex justify-content-center">
-          <h5 class="card-title display-4 d-flex align-items-center text-white "> <span>Guitars</span> </h5>
-        </div>
-      </div>
-
-    </div>
-
-
-  <!-- List that shows some products randomly from our DS Products are Cards (image,name,price,button to add to cart) -->
+  <!-- Big picture main sections -->
+  <div class="d-flex flex-column align-items-center ">
 
     <div>
-      <!-- List to choose the product from -->
-      <div class="mb-5 mt-5 d-flex flex-column align-items-center">
-        
-        <div class="mb-3">
-          <h4>New Products</h4>
-        </div>
-
-        <div>
-          <select id="inst" class="btn btn-outline-secondary">
-            <option>Oud</option>
-            <option>Guitar</option>
-          </select>
-        </div>
-
+      <div class="gnrl-section-size m-2">
+        <a href="stringInst.html" class="position-relative">
+          <img class="img-fluid" src="https://via.placeholder.com/500x800" alt="" style="height: 100%;">
+          <h2 class="position-absolute top-50 start-50 translate-middle text-center">String Instruments</h2>
+        </a>
       </div>
 
+      <div class="gnrl-section-size m-2">
+        <a href="" class="position-relative">
+          <img class="img-fluid" src="https://via.placeholder.com/500x800" alt="" style="height: 100%;">
+          <h2 class="position-absolute top-50 start-50 translate-middle text-center">Key Instruments</h2>
+        </a>
+      </div>
 
-      <!-- The lists of list of products -->
-      <div>
-        <!-- A list of prodcuts -->
-        <div id="Oud" class="container-fluid">
-
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for product in products %}
-            {% if product.tag == 'Oud' %}
-            <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="{{ product.imageURL }}" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">{{ product.name }}</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: ${{ product.price }}</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-            <!-- <div class="col">
-              <div class="card shadow-sm">
-                <img src="oud2.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $199</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="oud1.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $99</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img src="oud2.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $199</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="oud1.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $99</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img src="oud2.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $199</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-            
-          </div>
-        </div>
-
-        <!-- Another list of prodcuts -->
-        <div id="Guitar" class="container-fluid">
-
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex align-items-end">
-            {% for product in products %}
-            {% if product.tag == 'Guitar' %}
-            <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="{{ product.imageURL }}" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">{{ product.name }}</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: ${{ product.price }}</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-            <!-- <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="guitar2.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $199</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="guitar1.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $99</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img src="guitar1.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $199</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img class="card-img-top" src="guitar1.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $99</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img src="guitar2.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">Name of the product</h5>
-                  <hr>
-                  <h5 class="card-subtitle mb-2">Price: $199</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-success">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-            
-          </div>
-        </div>
+      <div class="gnrl-section-size m-2">
+        <a href="" class="position-relative">
+          <img class="img-fluid" src="https://via.placeholder.com/500x800" alt="" style="height: 100%;">
+          <h2 class="position-absolute top-50 start-50 translate-middle text-center">Tabla</h2>
+        </a>
       </div>
     </div>
 
+  </div>
+
+</div>
 {% endblock content %}
