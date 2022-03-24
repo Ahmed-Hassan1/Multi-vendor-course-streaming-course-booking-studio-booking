@@ -9,26 +9,13 @@
   <!-- Banner/carousell at top -->
   <div>
     <div class="d-flex of scroll">
+      {% for banner in banners %}
       <div class="p-2">
         <a href="#">
-          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
+          <img class="image-top-view rounded" src="{{ banner.imageURL }}" alt="{{banner.name}}">
         </a>
       </div>
-      <div class="p-2">
-        <a href="#">
-          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
-        </a>
-      </div>
-      <div class="p-2">
-        <a href="#">
-          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
-        </a>
-      </div>
-      <div class="p-2">
-        <a href="#">
-          <img class="image-top-view rounded" src="https://via.placeholder.com/660x330" alt="">
-        </a>
-      </div>
+      {% endfor %}
       
     </div>
     
@@ -124,29 +111,15 @@
 
   <!-- Big picture main sections -->
   <div class="d-flex flex-column align-items-center ">
-
-    <div>
+    
+      {% for cat in mainCats %}
       <div class="gnrl-section-size m-2">
-        <a href="stringInst.html" class="position-relative">
-          <img class="img-fluid" src="https://via.placeholder.com/500x800" alt="" style="height: 100%;">
-          <h2 class="position-absolute top-50 start-50 translate-middle text-center">String Instruments</h2>
+        <a href="{% url 'instruments' cat.name %}" class="position-relative d-flex justify-content-center">
+          <img class="img-fluid" src="{{ cat.imageURL }}" alt="" style="height: 100%;">
+          <h2 class="position-absolute top-50 start-50 translate-middle text-center bg-secondary">{{ cat.name }}</h2>
         </a>
-      </div>
-
-      <div class="gnrl-section-size m-2">
-        <a href="" class="position-relative">
-          <img class="img-fluid" src="https://via.placeholder.com/500x800" alt="" style="height: 100%;">
-          <h2 class="position-absolute top-50 start-50 translate-middle text-center">Key Instruments</h2>
-        </a>
-      </div>
-
-      <div class="gnrl-section-size m-2">
-        <a href="" class="position-relative">
-          <img class="img-fluid" src="https://via.placeholder.com/500x800" alt="" style="height: 100%;">
-          <h2 class="position-absolute top-50 start-50 translate-middle text-center">Tabla</h2>
-        </a>
-      </div>
-    </div>
+        </div>
+      {% endfor %}
 
   </div>
 

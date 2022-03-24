@@ -28,7 +28,7 @@
           </button>
 
           <!--LOGO-->
-          <a class="navbar-brand" href="testing.html"><img src="{% static 'images/logo.png' %}" alt=""></a>
+          <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
 
           <button type="button" class="btn d-lg-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill"
@@ -48,73 +48,16 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="testing.html">Home</a>
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="stringInst.html">String Instruments</a>
+                <a class="nav-link" href="#">String Instruments</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Key Instruments</a>
               </li>
-
-              <!-- <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Product
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-
-                </ul>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Accessories
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-
-                </ul>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Product
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li class="dropdown-header">
-                    <h6> <a class="sub-menu-header" href="">All Types</a> </h6>
-                  </li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li><a class="dropdown-item" href="#">sub product</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Accessories</a></li>
-                </ul>
-              </li> -->
-
             </ul>
+            
             <!-- Log in/signup or logout/account -->
             <hr class="divider">
             <button type="button" class="btn">Log In</button>
