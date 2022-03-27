@@ -1,5 +1,7 @@
 from django.db import models
-from smart_selects.db_fields import GroupedForeignKey,ChainedForeignKey
+from smart_selects.db_fields import ChainedForeignKey
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
 
 # Create your models here.
 
@@ -33,10 +35,8 @@ class Product(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True)
     subCategory = ChainedForeignKey(SubCategory,'category','category',False,True)
     name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200,null=True,blank=True)
     price = models.FloatField()
-
-    tag_choice = [('Oud','Oud'),('Guitar','Guitar'),('Tabla','Tabla')]
-    tag = models.CharField(max_length=50,choices=tag_choice,null=True)
 
     image = models.ImageField(null=True,blank=True)
 
@@ -50,6 +50,30 @@ class Product(models.Model):
         except:
             url = ''
         return url
+
+import string
+import random
+def random_string_generator(size = 10, chars = string.ascii_lowercase + string.digits): 
+    return ''.join(random.choice(chars) for _ in range(size))
+
+def unique_slug(instance, new_slug=None):
+    if new_slug is not None:
+        slug = new_slug
+    else:
+        slug = slugify(instance.name)
+
+    Klass = instance.__class__ 
+    qs_exists = Klass.objects.filter(slug = slug).exists()
+    if qs_exists:
+        new_slug= "{slug}-{randString}".format(slug=slug,randString=random_string_generator())
+        return unique_slug(instance,new_slug=new_slug)
+    return slug
+
+def pre_save_reciever(sender,instance,*args,**kwargs):
+    if not instance.slug:
+        instance.slug=unique_slug(instance)
+
+pre_save.connect(pre_save_reciever,sender=Product)
 
 #Home page carousell and cards
 class CarouselBanner(models.Model):

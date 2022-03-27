@@ -1,8 +1,3 @@
-Sub-Product page: DONE
-    Top pics (hori scroll section)
-    List all items as cards (vert scroll, pagination)
-    Filter section
-
 Item page:
     Images of the product
     Price
@@ -13,9 +8,13 @@ Cart page:
 
 Checkout page:
 
-NOTES:
-BOx SHADOWS
 
 Backend:
 Use class based views for generic product display
 Create the vendor page to upload stuff
+
+
+
+
+STYLE:
+    Fix cards and images to be uniform

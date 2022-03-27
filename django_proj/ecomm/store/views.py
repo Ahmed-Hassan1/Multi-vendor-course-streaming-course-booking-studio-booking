@@ -11,16 +11,29 @@ def homeView(request):
     mainCats=Category.objects.all()
     context={'products':products,'banners':banners,'mainCats':mainCats}
     print(context)
+
     return render(request,'store/home.html',context)
+
 
 def instrumentView(request,pk):
     subs=Category.objects.get(name=pk)
-    a=SubCategory.objects.all().filter(category__name=subs)
-    print(subs)
-    print(a)
-    return render(request,'store/instruments.html')
+    subCats=SubCategory.objects.all().filter(category__name=subs)
+    context = {'subCats':subCats}
 
-    
+    return render(request,'store/instruments.html',context)
+
+def subCatView(request,pk):
+    subCat=SubCategory.objects.get(name=pk)
+    products = Product.objects.filter(subCategory__name=subCat)
+    context = {'products':products}
+
+    return render(request,'store/subCat.html',context)    
+
+def productView(request,pk):
+    product=Product.objects.get(slug=pk)
+    print(product)
+    context={'product':product}
+    return render(request,'store/product.html',context)
 
 def oudView(request):
     if request.GET.get('filter_by')=='HighToLow':
@@ -36,3 +49,5 @@ def oudView(request):
     products = Product.objects.all()
     context={'products':products}
     return render(request,'store/ouds.html',context)
+
+

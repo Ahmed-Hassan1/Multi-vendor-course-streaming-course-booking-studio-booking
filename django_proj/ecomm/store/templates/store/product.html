@@ -1,0 +1,48 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex of scroll">
+    <div class="p-2">
+      <a href="#">
+        <img class="image-top-view rounded" src="https://via.placeholder.com/500x500" alt="">
+      </a>
+    </div>
+
+    <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/500x500" alt="">
+        </a>
+      </div>
+
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/500x500" alt="">
+        </a>
+      </div>
+
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/500x500" alt="">
+        </a>
+      </div>
+
+      <div class="p-2">
+        <a href="#">
+          <img class="image-top-view rounded" src="https://via.placeholder.com/500x500" alt="">
+        </a>
+      </div>
+    
+</div>
+
+<br>
+<div class="container">
+    <h1>{{product.name}}</h1>
+    <h2>${{product.price}}</h2>
+    <br>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta velit sit, provident saepe, reprehenderit rerum, culpa corrupti temporibus dolore placeat adipisci blanditiis similique. Non laborum, quod nihil distinctio id magnam.</p>
+    <br>
+    <button class="btn btn-secondary" style="width: 100%;">Add to Cart</button>
+</div>
+
+{% endblock content %}
