@@ -1,7 +1,9 @@
 from multiprocessing import context
 from unicodedata import category, name
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from .models import Product,CarouselBanner, SubCategory, Category
+from .forms import newUserForm
 
 # Create your views here.
 
@@ -10,7 +12,6 @@ def homeView(request):
     banners=CarouselBanner.objects.all()
     mainCats=Category.objects.all()
     context={'products':products,'banners':banners,'mainCats':mainCats}
-    print(context)
 
     return render(request,'store/home.html',context)
 
@@ -34,6 +35,36 @@ def productView(request,pk):
     print(product)
     context={'product':product}
     return render(request,'store/product.html',context)
+
+def registerView(request):
+    form = newUserForm()
+    if request.method == 'POST':
+        form = newUserForm(request.POST)
+        print(form.error_messages)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+
+    context={'form':form}
+    return render(request,'store/register.html',context)
+
+def logInView(request):
+    if request.method == 'POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
+        user = authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            print('SUCCESS')
+            return redirect('home')
+        print('Fail')
+    context={}
+    return render(request,'store/login.html',context)
+
+def logOutView(request):
+    logout(request)
+    return redirect('home')
 
 def oudView(request):
     if request.GET.get('filter_by')=='HighToLow':

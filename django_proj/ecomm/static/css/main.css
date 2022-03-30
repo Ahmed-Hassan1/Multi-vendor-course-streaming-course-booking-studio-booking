@@ -89,6 +89,10 @@ h2{
     height: 70vh;
 }
 
+.width-100pc{
+    width: 100%;
+}
+
 .anim-card{
     animation: appear 2.5s forwards;
 }
