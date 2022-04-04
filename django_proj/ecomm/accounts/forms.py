@@ -5,12 +5,21 @@ from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'floatingInput',
+            'placeholder':'password'
+            })
+
     class Meta(UserCreationForm):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields+('age',)
+        fields = ('username','email','age')
 
 class CustomUserChangeForm(UserChangeForm):
     
     class Meta:
         model= CustomUser
-        fields = UserChangeForm.Meta.fields
+        fields = ('username','email','age')
