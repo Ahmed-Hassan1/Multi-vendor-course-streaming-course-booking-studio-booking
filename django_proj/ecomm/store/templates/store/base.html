@@ -64,7 +64,8 @@
             <a class="btn" href="{% url 'signout' %}">Log out</a>
             {% else %}
             <a class="btn" href="{% url 'signin' %}">Log In</a>
-            <a class="btn" href="{% url 'signup' %}">Sign Up</a>
+            <a class="btn" href="{% url 'customer-signup' %}">Sign Up</a>
+            <a class="btn" href="{% url 'vendor-signup' %}">Vendor Sign Up</a>
             {% endif %}
             <button type="button" class="btn d-none d-lg-block">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill"
