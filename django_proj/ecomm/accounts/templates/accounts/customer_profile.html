@@ -1,0 +1,15 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Profile of: {{user.username}}</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <input type="submit" name="Edit" class="width-100pc btn btn-outline-primary">
+</form>
+
+
+{% endblock content %}

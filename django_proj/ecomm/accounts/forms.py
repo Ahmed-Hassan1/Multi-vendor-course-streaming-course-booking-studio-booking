@@ -1,5 +1,6 @@
 from dataclasses import fields
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from .models import CustomUser, Customer, Vendor
 
@@ -31,7 +32,7 @@ class CustomerSignUpForm(UserCreationForm):
         customer.last_name = self.cleaned_data.get('last_name')
         customer.phone_number = self.cleaned_data.get('phone_number')
         customer.save()
-        return user
+        return customer.customuser
 
 class VendorSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True,max_length=50)
@@ -62,7 +63,14 @@ class VendorSignUpForm(UserCreationForm):
         vendor.company_name = self.cleaned_data.get('company_name')
         vendor.phone_number = self.cleaned_data.get('phone_number')
         vendor.save()
-        return user
+        return vendor.customuser
+
+class CustomerProfileForm(ModelForm):
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+        exclude = ['customuser']
 
 # class CustomUserCreationForm(UserCreationForm):
 

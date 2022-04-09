@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 
 from .models import CustomUser, Customer, Vendor
-from .forms import CustomerSignUpForm, VendorSignUpForm
+from .forms import *
 
 # Create your views here.
 
@@ -43,6 +43,19 @@ def signInView(request):
     context={}
     return render(request,'accounts/signin.html')
 
+def customerProfileView(request):
+    customer = request.user.customer
+    print(customer)
+    form = CustomerProfileForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerProfileForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('customer-profile')
+
+    context={'form':form}
+    return render(request,'accounts/customer_profile.html',context)
 
 # def signUpView(request):
 #     form = CustomUserCreationForm
