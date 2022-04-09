@@ -2,6 +2,7 @@ from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
+from accounts.models import Vendor
 
 # Create your models here.
 
@@ -37,8 +38,8 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,null=True,blank=True)
     price = models.FloatField()
-
     image = models.ImageField(null=True,blank=True)
+    vendor = models.ForeignKey(Vendor,null=True,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

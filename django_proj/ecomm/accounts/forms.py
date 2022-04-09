@@ -2,6 +2,7 @@ from dataclasses import fields
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.core.mail import send_mail
 from .models import CustomUser, Customer, Vendor
 
 
@@ -63,6 +64,15 @@ class VendorSignUpForm(UserCreationForm):
         vendor.company_name = self.cleaned_data.get('company_name')
         vendor.phone_number = self.cleaned_data.get('phone_number')
         vendor.save()
+        
+        subject = vendor.company_name + ' is a new vendor'
+        message = 'Activate the account'
+        send_mail(
+        subject,
+        message,
+        'from@Admin.com',
+        ['to@example.com']
+        )
         return vendor.customuser
 
 class CustomerProfileForm(ModelForm):

@@ -5,7 +5,7 @@ from django.views.generic import CreateView
 
 from .models import CustomUser, Customer, Vendor
 from .forms import *
-
+from store.models import Product
 # Create your views here.
 
 
@@ -57,19 +57,15 @@ def customerProfileView(request):
     context={'form':form}
     return render(request,'accounts/customer_profile.html',context)
 
-# def signUpView(request):
-#     form = CustomUserCreationForm
-    
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST)
-#         print(form.error_messages)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('signin')
 
-#     context={'form':form}
-#     return render(request,'accounts/signup.html',context)
+def dashboardView(request):
+    products=[]
+    if request.user.is_vendor:
+        products = Product.objects.filter(vendor=request.user.vendor)
+    print(products)
 
+    context={'products':products}
+    return render(request,'accounts/dashboard.html',context)
 
 def signOutView(request):
 
