@@ -5,4 +5,28 @@
 
 <h1>DASH BOARD</h1>
 
+{% if user.vendor.is_activated %}
+<table class="table">
+    <thead>
+        <th>Name</th>
+        <th>Price</th>
+        <th>SubCat</th>
+        <th>Cat</th>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.subCategory}}</td>
+            <td>{{product.category}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<p>Please wait for activiation</p>
+
+
 {% endblock content %}

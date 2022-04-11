@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.core.mail import send_mail
 from .models import CustomUser, Customer, Vendor
+from store.models import Product
 
 
 
@@ -65,6 +66,7 @@ class VendorSignUpForm(UserCreationForm):
         vendor.phone_number = self.cleaned_data.get('phone_number')
         vendor.save()
         
+        #
         subject = vendor.company_name + ' is a new vendor'
         message = 'Activate the account'
         send_mail(
@@ -82,23 +84,10 @@ class CustomerProfileForm(ModelForm):
         fields = '__all__'
         exclude = ['customuser']
 
-# class CustomUserCreationForm(UserCreationForm):
 
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         for field in self.fields:
-#             self.fields[field].widget.attrs.update({
-#             'class': 'form-control',
-#             'id': 'floatingInput',
-#             'placeholder':'password'
-#             })
+class ProductForm(forms.ModelForm):
 
-#     class Meta(UserCreationForm):
-#         model = CustomUser
-#         fields = ('username','email')
-
-# class CustomUserChangeForm(UserChangeForm):
-    
-#     class Meta:
-#         model= CustomUser
-#         fields = ('username','email')
+    class Meta:
+        model = Product
+        fields = '__all__'
+        exclude = ['vendor','slug']

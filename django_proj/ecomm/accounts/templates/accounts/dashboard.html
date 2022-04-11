@@ -6,6 +6,9 @@
 <h1>DASH BOARD</h1>
 
 {% if user.vendor.is_activated %}
+<a href="{% url 'add-product' %}" class="btn btn-outline-primary">Add Product</a>
+
+
 <table class="table">
     <thead>
         <th>Name</th>

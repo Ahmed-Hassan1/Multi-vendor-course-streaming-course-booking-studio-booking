@@ -29,6 +29,23 @@ class VendorSignUpView(CreateView):
         login(self.request,user)
         return redirect('home')
 
+
+def add_product(request):
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST,request.FILES)
+
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.vendor = request.user.vendor
+            product.save()
+            return redirect('dashboard')
+    else:
+        form = ProductForm()
+
+    context={'form':form}
+    return render(request,'accounts/customer_profile.html',context)
+
 def signInView(request):
     if request.method == 'POST':
         username=request.POST.get('username')
