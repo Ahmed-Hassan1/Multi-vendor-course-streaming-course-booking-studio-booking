@@ -29,23 +29,6 @@ class VendorSignUpView(CreateView):
         login(self.request,user)
         return redirect('home')
 
-
-def add_product(request):
-
-    if request.method == 'POST':
-        form = ProductForm(request.POST,request.FILES)
-
-        if form.is_valid():
-            product = form.save(commit=False)
-            product.vendor = request.user.vendor
-            product.save()
-            return redirect('dashboard')
-    else:
-        form = ProductForm()
-
-    context={'form':form}
-    return render(request,'accounts/customer_profile.html',context)
-
 def signInView(request):
     if request.method == 'POST':
         username=request.POST.get('username')
@@ -62,7 +45,6 @@ def signInView(request):
 
 def customerProfileView(request):
     customer = request.user.customer
-    print(customer)
     form = CustomerProfileForm(instance=customer)
 
     if request.method == 'POST':
@@ -74,17 +56,41 @@ def customerProfileView(request):
     context={'form':form}
     return render(request,'accounts/customer_profile.html',context)
 
-
-def dashboardView(request):
-    products=[]
-    if request.user.is_vendor:
-        products = Product.objects.filter(vendor=request.user.vendor)
-    print(products)
-
-    context={'products':products}
-    return render(request,'accounts/dashboard.html',context)
-
 def signOutView(request):
 
     logout(request)
     return redirect('home')
+
+
+def dashboardView(request):
+
+    context={}
+    return render(request,'accounts/dashboard.html',context)
+
+def dashboardOrdersView(request):
+
+    context={}
+    return render(request,'accounts/dashboard_orders.html',context)
+
+def dashboardProductsView(request):
+    products=[]
+    products = Product.objects.filter(vendor=request.user.vendor)
+
+    context={'products':products}
+    return render(request,'accounts/dashboard_products.html',context)
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST,request.FILES)
+
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.vendor = request.user.vendor
+            product.save()
+            return redirect('dashboard')
+    else:
+        form = ProductForm()
+
+    context={'form':form}
+    return render(request,'accounts/dashboard.html',context)
+

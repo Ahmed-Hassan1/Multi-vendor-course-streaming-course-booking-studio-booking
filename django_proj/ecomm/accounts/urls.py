@@ -9,5 +9,7 @@ urlpatterns=[
     path('signout/',signOutView,name='signout'),
     path('profile/',customerProfileView,name='customer-profile'),
     path('dashboard/',dashboardView,name='dashboard'),
+    path('dashboard-orders/',dashboardOrdersView,name='dashboard-orders'),
+    path('dashboard-products/',dashboardProductsView,name='dashboard-products'),
     path('add-product/',add_product,name='add-product')
 ]

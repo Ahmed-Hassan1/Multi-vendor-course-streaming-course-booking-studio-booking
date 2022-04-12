@@ -1,0 +1,34 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Orders</h1>
+<h3>{{user.vendor}}</h3>
+
+{% if user.vendor.is_activated %}
+
+<div>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard-orders' %}">Orders</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard-products' %}">Products</a>
+        </li>
+        
+    </ul>
+</div>
+
+<h1>Orders Placeholder</h1>
+
+{% else %}
+    <p>Please wait for activiation</p>
+{% endif %}
+
+{% endblock content %}
