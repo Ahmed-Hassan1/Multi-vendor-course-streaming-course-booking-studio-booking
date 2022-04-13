@@ -2,7 +2,7 @@ from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
-from accounts.models import Vendor
+from accounts.models import Vendor, Customer
 
 # Create your models here.
 
@@ -75,6 +75,19 @@ def pre_save_reciever(sender,instance,*args,**kwargs):
         instance.slug=unique_slug(instance)
 
 pre_save.connect(pre_save_reciever,sender=Product)
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.product.name
+
 
 #Home page carousell and cards
 class CarouselBanner(models.Model):

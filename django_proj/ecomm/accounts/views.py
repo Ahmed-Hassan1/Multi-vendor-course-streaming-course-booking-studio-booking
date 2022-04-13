@@ -5,7 +5,7 @@ from django.views.generic import CreateView
 
 from .models import CustomUser, Customer, Vendor
 from .forms import *
-from store.models import Product
+from store.models import Product, Order
 # Create your views here.
 
 
@@ -63,8 +63,8 @@ def signOutView(request):
 
 
 def dashboardView(request):
-
-    context={}
+    orders = Order.objects.all()
+    context={'orders':orders}
     return render(request,'accounts/dashboard.html',context)
 
 def dashboardOrdersView(request):
@@ -92,5 +92,5 @@ def add_product(request):
         form = ProductForm()
 
     context={'form':form}
-    return render(request,'accounts/dashboard.html',context)
+    return render(request,'accounts/add_product.html',context)
 

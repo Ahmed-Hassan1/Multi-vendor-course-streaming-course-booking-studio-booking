@@ -15,6 +15,9 @@ class Customer(models.Model):
     last_name=models.CharField(max_length=50)
     phone_number=models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.customuser.username
+
 
 class Vendor(models.Model):
     customuser=models.OneToOneField(CustomUser,on_delete=models.CASCADE,primary_key=True)
