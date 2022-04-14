@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.core.mail import send_mail
 from .models import CustomUser, Customer, Vendor
-from store.models import Product
+from store.models import Product,OrderItem
 
 
 
@@ -91,3 +91,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = '__all__'
         exclude = ['vendor','slug']
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['status']

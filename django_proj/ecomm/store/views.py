@@ -35,7 +35,6 @@ def subCatView(request,pk):
 
 def productView(request,pk):
     product=Product.objects.get(slug=pk)
-    print(product)
     context={'product':product}
     return render(request,'store/product.html',context)
 

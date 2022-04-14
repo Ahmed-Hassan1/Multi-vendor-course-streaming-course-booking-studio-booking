@@ -63,16 +63,21 @@
     <table class="table table-striped">
         <thead>
             <th>ID</th>
+            <th>OrderID</th>
             <th>Customer</th>
             <th>Date</th>
-            <th>Cat</th>
+            <th>Product</th>
+            <th>Status</th>
         </thead>
         <tbody>
             {% for order in orders %}
             <tr>
-                <td>{{order.id}}</td>
-                <td>{{order.customer}}</td>
-                <td>{{order.date}}</td>
+                <td> <a href="{% url 'dashboard-ordersdetails' order.id %}">{{order.id}}</a> </td>
+                <td>{{order.order.id}}</td>
+                <td>{{order.order.customer}}</td>
+                <td>{{order.order.date}}</td>
+                <td>{{order.product}}</td>
+                <td>{{order.status}}</td>
             </tr>
             {% endfor %}
         </tbody>

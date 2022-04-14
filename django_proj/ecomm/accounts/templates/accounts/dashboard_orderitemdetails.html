@@ -1,0 +1,73 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Order Details</h1>
+<h3>{{user.vendor}}</h3>
+<div>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard-orders' %}">Orders</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard-products' %}">Products</a>
+        </li>
+        
+    </ul>
+</div>
+
+{% if user.vendor.is_activated %}
+<br>
+<div class="d-flex flex-column">
+    <div>
+        ID: {{orderitem.id}}
+    </div>
+
+    <div>
+        OrderID: {{orderitem.order.id}}
+    </div>
+
+    <div>
+        Customer: {{orderitem.order.customer}}
+    </div>
+
+    <div>
+        Date: {{orderitem.order.date}}
+    </div>
+
+    <div>
+        Product: {{orderitem.product}}
+    </div>
+
+    <div>
+        Status: {{orderitem.status}}
+    </div>
+    
+    <br>
+    <div>
+        EDIT STATUS
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="Submit" />
+        </form>
+        
+    </div>
+    
+    
+    
+</div>
+
+
+
+{% else %}
+    <p>Please wait for activiation</p>
+{% endif %}
+
+{% endblock content %}

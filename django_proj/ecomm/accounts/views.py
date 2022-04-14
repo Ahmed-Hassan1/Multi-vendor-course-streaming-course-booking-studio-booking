@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -5,7 +6,7 @@ from django.views.generic import CreateView
 
 from .models import CustomUser, Customer, Vendor
 from .forms import *
-from store.models import Product, Order
+from store.models import Product, Order, OrderItem
 # Create your views here.
 
 
@@ -63,14 +64,32 @@ def signOutView(request):
 
 
 def dashboardView(request):
-    orders = Order.objects.all()
+    orders = OrderItem.objects.all().filter(product__vendor=request.user.vendor).order_by('-order__date')[0:5]
     context={'orders':orders}
     return render(request,'accounts/dashboard.html',context)
 
 def dashboardOrdersView(request):
-
-    context={}
+    orders = OrderItem.objects.all().filter(product__vendor=request.user.vendor).order_by('-order__date')
+    context={'orders':orders}
     return render(request,'accounts/dashboard_orders.html',context)
+
+def dashboardOrderDetailsView(request,pk):
+    
+    orderitem = OrderItem.objects.get(id=pk)
+    form = OrderForm(instance = orderitem)
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=orderitem)
+        print('inside POST')
+        if form.is_valid():
+            print('is valid')
+            form.save()
+            return redirect('dashboard-ordersdetails',pk=orderitem.id)
+
+    if request.user.vendor == orderitem.product.vendor:
+        context = {'orderitem':orderitem,'form':form}
+    else:
+        context={}
+    return render(request,'accounts/dashboard_orderitemdetails.html',context)
 
 def dashboardProductsView(request):
     products=[]
@@ -78,6 +97,8 @@ def dashboardProductsView(request):
 
     context={'products':products}
     return render(request,'accounts/dashboard_products.html',context)
+
+
 
 def add_product(request):
     if request.method == 'POST':

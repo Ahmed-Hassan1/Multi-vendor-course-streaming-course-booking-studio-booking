@@ -82,9 +82,16 @@ class Order(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 class OrderItem(models.Model):
+    choices=[
+        ('Processing','Processing'),
+        ('Shipped','Shipped'),
+        ('Delivered','Delivered'),
+    ]
+
+
     order = models.ForeignKey(Order,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
-
+    status = models.CharField(max_length=15,choices=choices,default='Processing')
     def __str__(self):
         return self.product.name
 
