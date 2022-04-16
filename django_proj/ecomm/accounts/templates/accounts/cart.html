@@ -1,0 +1,55 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>CART</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="box-element">
+                <a  class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; Continue Shopping</a>
+            </div>
+    
+            <table class="table">
+                <tr>
+                    <th><h5>Items: <strong>{{order.get_total_items}}</strong></h5></th>
+                    <th><h5>Total:<strong> ${{order.get_total_price}}</strong></h5></th>
+                    <th>
+                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+                    </th>
+                </tr>
+            </table>
+    
+            <br>
+    
+            <div class="box-element">
+                <div class="cart-row">
+                    <div style="flex:2"></div>
+                    <div style="flex:2"><strong>Item</strong></div>
+                    <div style="flex:1"><strong>Price</strong></div>
+                    <div style="flex:1"><strong>Quantity</strong></div>
+                    <div style="flex:1"><strong>Total</strong></div>
+                </div>
+                {% for orderitem in orderitems %}
+                <div class="cart-row">
+                    <div style="flex:2"><img class="row-image" src="{{orderitem.product.imageURL}}"></div>
+                    <div style="flex:2"><p>{{orderitem.product.name}}</p></div>
+                    <div style="flex:1"><p>{{orderitem.product.price}}</p></div>
+                    <div style="flex:1">
+                        <p class="quantity">1</p>
+                        <div class="quantity">
+                            <img data-product="{{orderitem.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+                    
+                            <img data-product="{{orderitem.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+                        </div>
+                    </div>
+                    <div style="flex:1"><p>${{orderitem.product.price}}</p></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

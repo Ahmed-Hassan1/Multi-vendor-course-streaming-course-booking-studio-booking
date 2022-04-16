@@ -29,8 +29,11 @@ def instrumentView(request,pk):
 def subCatView(request,pk):
     subCat=SubCategory.objects.get(name=pk)
     products = Product.objects.filter(subCategory__name=subCat)
+    print('Products:')
+    print(products)
     context = {'products':products}
-
+    print('SubCat:')
+    print(subCat)
     return render(request,'store/subCat.html',context)    
 
 def productView(request,pk):

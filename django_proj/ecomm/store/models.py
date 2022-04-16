@@ -78,10 +78,22 @@ pre_save.connect(pre_save_reciever,sender=Product)
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)#modify the delete to keep the records
     date = models.DateTimeField(auto_now_add=True)
+    complete = models.BooleanField(default=False,null=True)
 
-class OrderItem(models.Model):
+    @property
+    def get_total_price(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([orderitem.product.price for orderitem in orderitems])
+        return total
+    
+    @property
+    def get_total_items(self):
+        orderitems = self.orderitem_set.all().count()
+        return orderitems
+
+class OrderItem(models.Model): # get total @property function
     choices=[
         ('Processing','Processing'),
         ('Shipped','Shipped'),

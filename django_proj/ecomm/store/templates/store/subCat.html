@@ -128,7 +128,7 @@
                 <h3>{{product.name}}</h3>
                 <div>{{product.price}}</div>
                 </a>
-                <button class="btn btn-outline-secondary">Add to Cart</button>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary update-cart">Add to Cart</button>
             </div>
             {% endfor %}
         </div>

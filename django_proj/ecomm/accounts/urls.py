@@ -12,5 +12,9 @@ urlpatterns=[
     path('dashboard-orders/',dashboardOrdersView,name='dashboard-orders'),
     path('dashboard-orders/<int:pk>/',dashboardOrderDetailsView,name='dashboard-ordersdetails'),
     path('dashboard-products/',dashboardProductsView,name='dashboard-products'),
-    path('add-product/',add_product,name='add-product')
+    path('add-product/',add_product,name='add-product'),
+
+    path('cart/',cartView,name='cart'),
+    path('checkout/',checkoutView,name='checkout'),
+    path('update-item/',updateItem,name='updateitem'),
 ]

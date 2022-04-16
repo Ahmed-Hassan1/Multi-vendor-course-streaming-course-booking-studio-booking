@@ -1,9 +1,10 @@
 from multiprocessing import context
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
-
+import json
 from .models import CustomUser, Customer, Vendor
 from .forms import *
 from store.models import Product, Order, OrderItem
@@ -115,3 +116,48 @@ def add_product(request):
     context={'form':form}
     return render(request,'accounts/add_product.html',context)
 
+
+
+
+def cartView(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        orderitems = order.orderitem_set.all()
+        print(order)
+        print(orderitems)
+        
+    else:
+        orderitems=[]
+        order = {'get_total_items':0,'get_total_price':0}
+    context = {'orderitems':orderitems, 'order':order}
+    return render(request,'accounts/cart.html',context)
+
+def checkoutView(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        orderitems = order.orderitem_set.all()
+        print(order)
+        print(orderitems)
+        
+    else:
+        orderitems=[]
+        order = {'get_total_items':0,'get_total_price':0}
+    context = {'orderitems':orderitems, 'order':order}
+    return render(request,'accounts/checkout.html',context)
+
+def updateItem(request):
+    data = json.loads(request.body)
+    prodID=data['prodID']
+    action=data['action']
+
+    customer = request.user.customer
+    product = Product.objects.get(id=prodID)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+    orderItem.save()
+    if action == 'remove':
+        orderItem.delete()
+
+    return JsonResponse('Item added', safe=False)
