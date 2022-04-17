@@ -65,6 +65,7 @@ def signOutView(request):
 
 
 def dashboardView(request):
+    #don't show order for vendor until it is completed
     orders = OrderItem.objects.all().filter(product__vendor=request.user.vendor).order_by('-order__date')[0:5]
     context={'orders':orders}
     return render(request,'accounts/dashboard.html',context)
@@ -128,8 +129,29 @@ def cartView(request):
         print(orderitems)
         
     else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
         orderitems=[]
         order = {'get_total_items':0,'get_total_price':0}
+
+        for i in cart:
+            product =  Product.objects.get(id=i)
+            price = product.price * cart[i]['quantity']
+            order['get_total_price']+=price
+            order['get_total_items']+=cart[i]['quantity']
+
+            item = {
+                'product':{
+                    'id':product.id,
+                    'name':product.name,
+                    'price':product.price,
+                    'imageURL':product.imageURL
+                },
+            }
+            orderitems.append(item)
+
     context = {'orderitems':orderitems, 'order':order}
     return render(request,'accounts/cart.html',context)
 
@@ -142,8 +164,28 @@ def checkoutView(request):
         print(orderitems)
         
     else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
         orderitems=[]
         order = {'get_total_items':0,'get_total_price':0}
+
+        for i in cart:
+            product =  Product.objects.get(id=i)
+            price = product.price * cart[i]['quantity']
+            order['get_total_price']+=price
+            order['get_total_items']+=cart[i]['quantity']
+
+            item = {
+                'product':{
+                    'id':product.id,
+                    'name':product.name,
+                    'price':product.price,
+                    'imageURL':product.imageURL
+                },
+            }
+            orderitems.append(item)
     context = {'orderitems':orderitems, 'order':order}
     return render(request,'accounts/checkout.html',context)
 

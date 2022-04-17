@@ -3,14 +3,11 @@
 
 {% block content %}
 <div class="d-flex flex-column">
-  <!-- <a href="testing.html" class="btn btn-outline-dark">Style 1</a>
-  <a href="testing2.html" class="btn btn-outline-dark">Style 2</a> -->
-
   <!-- Banner/carousell at top -->
-  <div>
+  <div class="shadow mb-4 bg-body rounded" style="background-color: #F0F5F9;">
     <div class="d-flex of scroll">
       {% for banner in banners %}
-      <div class="p-2">
+      <div class="">
         <a href="#">
           <img class="image-top-view rounded" src="{{ banner.imageURL }}" alt="{{banner.name}}">
         </a>
@@ -22,103 +19,66 @@
 
   </div>
 
-  <!-- Single section Carousel -->
-  <div class="m-2 scroll">
+  <!-- Single section Carousel New items-->
+  <div class="shadow mb-4 bg-body rounded scroll " >
     <!-- header -->
-    <div style="background-color: rgb(196, 192, 192);">
-      <div class="d-flex justify-content-between align-items-center">
+    <div >
+      <div class="d-flex justify-content-between align-items-center" style="background-color: #dce0e7;">
         <h2 class="text-center">New</h2>
         <a class="p-2" href="#">SEE ALL</a>
       </div>
     </div>
 
     <!-- items -->
-    <div class="d-flex of">
-
+    <div class="d-flex of align-items-end" >
+      {% for product in products %}
       <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
+        <a class="d-flex flex-column" href="{% url 'product' product.slug %}">
+          <img class="img-fluid" src="{{product.imageURL}}" alt="">
+          <h3>{{product.name}}</h3>
+          <div>{{product.price}}</div>
         </a>
       </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3 class="text-center">Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
-
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-          <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-          <h3>Name</h3>
-          <div>Price</div>
-        </a>
-      </div>
+      {% endfor %}
     </div>
   </div>
 
+  <!-- OR this new -->
+  <div class="shadow mb-4 bg-body rounded scroll">
+    <!-- header -->
+    <div style="background-color: #dce0e7;">
+      <div class="d-flex justify-content-center">
+        <h2 class="text-center">New Additions</h2>
+      </div>
+    </div>
+
+    <!-- items -->
+    <div class="d-flex of align-items-end">
+      {% for product in products %}
+      <div class="p-2 itm">
+        <a class="d-flex flex-column" href="{% url 'product' product.slug %}">
+          <img class="img-fluid" src="{{product.imageURL}}" alt="">
+          <h3>{{product.name}}</h3>
+          <div>{{product.price}}</div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  
   <!-- Big picture main sections -->
-  <div class="d-flex flex-column align-items-center ">
+  <div class="d-flex flex-column align-items-center shadow mb-4 bg-body rounded overflow-hidden">
     
       {% for cat in mainCats %}
-      <div class="gnrl-section-size m-2">
+      <div>
         <a href="{% url 'instruments' cat.name %}" class="position-relative d-flex justify-content-center">
-          <img class="img-fluid" src="{{ cat.imageURL }}" alt="" style="height: 100%;">
-          <h2 class="position-absolute top-50 start-50 translate-middle text-center bg-secondary">{{ cat.name }}</h2>
+          
+          <img class="gnrl-section-size" src="{{ cat.imageURL }}" alt="">
+          <div class="gnrl-section-overlay"></div>
+          <h1 class="position-absolute top-50 start-50 translate-middle text-center gnrl-section-text" style="color: white; font-size: 2rem;">{{ cat.name }}</h1>
+
         </a>
-        </div>
+      </div>
       {% endfor %}
 
   </div>

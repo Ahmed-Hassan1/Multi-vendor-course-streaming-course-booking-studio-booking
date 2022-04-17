@@ -12,10 +12,32 @@ for (i=0; i<updateBtns.length; i++)
 
         if ( user === 'AnonymousUser')
         {
-            console.log('user is not logged in');
+            addCookieItem(prodID,action);
         }
         else updateUserOrder(prodID,action);
     })
+}
+
+function addCookieItem(prodID,action)
+{
+    console.log('Not loged in..');
+
+    if(action ==  'add')
+    {
+        if(cart[prodID]== undefined)
+        {
+            cart[prodID] = {'quantity':1}
+        }
+    }
+
+    if(action ==  'remove')
+    {
+        delete cart[prodID];
+    }
+    console.log(cart)
+
+    document.cookie = 'cart='+ JSON.stringify(cart) + ";domian=;path=/"
+    location.reload()
 }
 
 function updateUserOrder(prodID,action)

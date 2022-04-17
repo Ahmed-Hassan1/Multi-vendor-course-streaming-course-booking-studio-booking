@@ -33,6 +33,7 @@ class SubCategory(models.Model):
         return self.name
 
 class Product(models.Model):
+    #add date timestamp
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True)
     subCategory = ChainedForeignKey(SubCategory,'category','category',False,True)
     name = models.CharField(max_length=200)

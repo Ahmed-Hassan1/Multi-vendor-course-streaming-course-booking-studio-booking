@@ -5,20 +5,20 @@
 
 <div>
         
-    <img src="https://via.placeholder.com/730x300" alt="" class="img-fluid p-2">
+    <img src="https://via.placeholder.com/730x300" alt="" class="img-fluid shadow mb-4 bg-body rounded">
 
-       <!-- Single section Carousel -->
-    <div class="m-2 scroll">
+  <!-- Single section Carousel -->
+  <!-- <div class="shadow mb-4 bg-body rounded scroll"> -->
     <!-- header -->
-    <div style="background-color: rgb(196, 192, 192);">
-      <div class="d-flex justify-content-between align-items-center">
+    <!-- <div>
+      <div class="d-flex justify-content-between align-items-center" style="background-color: #dce0e7;">
         <h2 class="text-center">Top picks</h2>
         <a class="p-2" href="#">SEE ALL</a>
       </div>
-    </div>
+    </div> -->
 
     <!-- items -->
-    <div class="d-flex of">
+    <!-- <div class="d-flex of">
 
       <div class="p-2 itm">
         <a class="d-flex flex-column" href="#">
@@ -92,9 +92,9 @@
         </a>
       </div>
     </div>
-    </div>
+  </div> -->
 
-    <div class="container">
+    <div class="container mb-4">
         <section>
             <div class="d-flex flex-column align-items-center">
                 <!-- <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -120,13 +120,11 @@
 
         <div class="row">
             {% for product in products %}
-            <div class="p-2 itm-50pc">
-                <a class="d-flex flex-column" href="{% url 'product' product.slug %}">
-
-                <img class="img-fluid img-thumbnail" src="{{product.imageURL}}" alt="Oud">
-                
-                <h3>{{product.name}}</h3>
-                <div>{{product.price}}</div>
+            <div class="p-2 itm-50pc shadow bg-body rounded d-flex flex-column justify-content-end">
+                <a class="d-flex flex-column justify-content-end" href="{% url 'product' product.slug %}" style="height: 100%;">
+                  <img class="img-fluid img-thumbnail" src="{{product.imageURL}}" alt="Oud">
+                  <h3>{{product.name}}</h3>
+                  <div>{{product.price}}</div>
                 </a>
                 <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary update-cart">Add to Cart</button>
             </div>

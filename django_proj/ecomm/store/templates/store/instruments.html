@@ -2,93 +2,33 @@
 {% load static %}
 
 {% block content %}
-<img src="https://via.placeholder.com/730x300" alt="" class="img-fluid p-2">
+<!-- Banner of category in DB add image field -->
+<img src="{% static 'images/string_banner.webp' %}" alt="" class="img-fluid shadow mb-4 bg-body rounded">
 
 {% for subCat in subCats %}
 <!-- Single section Carousel -->
-<div class="m-2 scroll">
+<div class="shadow mb-4 bg-body rounded scroll">
     <!-- header -->
-    <div style="background-color: rgb(196, 192, 192);">
-        <div class="d-flex justify-content-between align-items-center">
+    <div>
+        <div class="d-flex justify-content-between align-items-center" style="background-color: #dce0e7;">
         <h2 class="text-center">{{subCat.name}}</h2>
         <a class="p-2" href="{% url 'subCategory' subCat.name %}">SEE ALL</a>
         </div>
     </div>
 
-    <!-- items -->
-    <div class="d-flex of">
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3 class="text-center">Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
-
-        <div class="p-2 itm">
-        <a class="d-flex flex-column" href="#">
-            <img class="img-fluid" src="https://via.placeholder.com/300x300" alt="">
-            <h3>Name</h3>
-            <div>Price</div>
-        </a>
-        </div>
+    <!-- items  parent and child height 100% to stretch the inner anchor link to cover the parent div check subCat.html--> 
+    <div class="d-flex of align-items-stretch">
+        {% for product in products %}
+            {% if product.subCategory == subCat %}
+            <div class="p-2 itm d-flex align-items-end" >
+                <a class="d-flex flex-column" href="{% url 'product' product.slug %}">
+                    <img class="img-fluid" src="{{product.imageURL}}" alt="">
+                    <h3>{{product.name}}</h3>
+                    <div>{{product.price}}</div>
+                </a>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endfor %}
