@@ -43,29 +43,6 @@
     </div>
   </div>
 
-  <!-- OR this new -->
-  <div class="shadow mb-4 bg-body rounded scroll">
-    <!-- header -->
-    <div style="background-color: #dce0e7;">
-      <div class="d-flex justify-content-center">
-        <h2 class="text-center">New Additions</h2>
-      </div>
-    </div>
-
-    <!-- items -->
-    <div class="d-flex of align-items-end">
-      {% for product in products %}
-      <div class="p-2 itm">
-        <a class="d-flex flex-column" href="{% url 'product' product.slug %}">
-          <img class="img-fluid" src="{{product.imageURL}}" alt="">
-          <h3>{{product.name}}</h3>
-          <div>{{product.price}}</div>
-        </a>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  
   <!-- Big picture main sections -->
   <div class="d-flex flex-column align-items-center shadow mb-4 bg-body rounded overflow-hidden">
     

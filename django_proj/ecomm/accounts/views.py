@@ -1,13 +1,15 @@
-from multiprocessing import context
+from asyncio.windows_events import NULL
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 import json
+import datetime
+
 from .models import CustomUser, Customer, Vendor
 from .forms import *
-from store.models import Product, Order, OrderItem
+from store.models import Product, Order, OrderItem,ShippingAddress
 # Create your views here.
 
 
@@ -65,13 +67,13 @@ def signOutView(request):
 
 
 def dashboardView(request):
-    #don't show order for vendor until it is completed
-    orders = OrderItem.objects.all().filter(product__vendor=request.user.vendor).order_by('-order__date')[0:5]
+    orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')[0:5]
+    print(orders)
     context={'orders':orders}
     return render(request,'accounts/dashboard.html',context)
 
 def dashboardOrdersView(request):
-    orders = OrderItem.objects.all().filter(product__vendor=request.user.vendor).order_by('-order__date')
+    orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')
     context={'orders':orders}
     return render(request,'accounts/dashboard_orders.html',context)
 
@@ -203,3 +205,90 @@ def updateItem(request):
         orderItem.delete()
 
     return JsonResponse('Item added', safe=False)
+
+
+def processOrder(request):
+    print('Data: ', request.body)
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+        totalPrice = float(data['userFormData']['total'])
+        order.transaction_id = transaction_id
+
+        if totalPrice == order.get_total_price:
+            order.complete = True
+        #Validate the order before saving it the total price
+        order.save()
+
+        ShippingAddress.objects.create(
+            customer = customer,
+            order = order,
+            address = data['shippingData']['address'],
+            city = data['shippingData']['city'],
+            state = data['shippingData']['state'],
+
+        )
+    else:
+        #Store the guest name for the order they created for shipping
+        print('not logged in')
+        print('COOKIES: ',request.COOKIES)
+        name = data['userFormData']['name']
+        email = data['userFormData']['email']
+
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
+        orderitems=[]
+        order = {'get_total_items':0,'get_total_price':0}
+
+        for i in cart:
+            product =  Product.objects.get(id=i)
+            price = product.price * cart[i]['quantity']
+            order['get_total_price']+=price
+            order['get_total_items']+=cart[i]['quantity']
+
+            item = {
+                'product':{
+                    'id':product.id,
+                    'name':product.name,
+                    'price':product.price,
+                    'imageURL':product.imageURL
+                },
+            }
+            orderitems.append(item)
+
+        cookieData = {'orderitems':orderitems, 'order':order}
+        items = cookieData['orderitems']
+
+        order = Order.objects.create(
+        )
+
+        for item in items:
+            product = Product.objects.get(id=item['product']['id'])
+            orderItem = OrderItem.objects.create(
+                order=order,
+                product=product,
+            )
+        
+        totalPrice = float(data['userFormData']['total'])
+        order.transaction_id = transaction_id
+
+        if totalPrice == order.get_total_price:
+            order.complete = True
+        #Validate the order before saving it the total price
+        order.save()
+
+        ShippingAddress.objects.create(
+            order = order,
+            address = data['shippingData']['address'],
+            city = data['shippingData']['city'],
+            state = data['shippingData']['state'],
+
+        )
+
+    return JsonResponse('Payment Complete', safe=False)

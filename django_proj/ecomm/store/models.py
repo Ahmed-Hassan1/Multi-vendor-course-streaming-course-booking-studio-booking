@@ -79,9 +79,10 @@ pre_save.connect(pre_save_reciever,sender=Product)
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)#modify the delete to keep the records
+    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete=models.CASCADE)#modify the delete to keep the records
     date = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False,null=True)
+    transaction_id = models.CharField(max_length=200,null=True)
 
     @property
     def get_total_price(self):
@@ -108,6 +109,14 @@ class OrderItem(models.Model): # get total @property function
     def __str__(self):
         return self.product.name
 
+
+class ShippingAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL,blank=True,null=True)
+    order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
+
+    address = models.CharField(max_length=250,null=False)
+    city = models.CharField(max_length=50,null=False)
+    state = models.CharField(max_length=50,null=False)
 
 #Home page carousell and cards
 class CarouselBanner(models.Model):
