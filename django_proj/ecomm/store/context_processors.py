@@ -20,6 +20,6 @@ def cart_badge(request):
         cart_items=0
         for i in cart:
             cart_items += cart[i]['quantity']
-    print(cart_items)
+    print("Cart items",cart_items)
 
     return {'cart_items':cart_items}

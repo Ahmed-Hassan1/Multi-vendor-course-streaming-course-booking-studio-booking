@@ -4,15 +4,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
+from django.utils.decorators import method_decorator
 import json
 import datetime
 
 from .models import CustomUser, Customer, Vendor
 from .forms import *
 from store.models import Product, Order, OrderItem,ShippingAddress
+from .decorators import *
 # Create your views here.
 
-
+@method_decorator(unauthenticated_user,name='dispatch')
 class CustomerSignUpView(CreateView):
     model = CustomUser
     form_class = CustomerSignUpForm
@@ -23,6 +25,7 @@ class CustomerSignUpView(CreateView):
         login(self.request,user)
         return redirect('home')
 
+@method_decorator(unauthenticated_user,name='dispatch')
 class VendorSignUpView(CreateView):
     model = CustomUser
     form_class = VendorSignUpForm
@@ -33,6 +36,7 @@ class VendorSignUpView(CreateView):
         login(self.request,user)
         return redirect('home')
 
+@unauthenticated_user
 def signInView(request):
     if request.method == 'POST':
         username=request.POST.get('username')
@@ -47,6 +51,8 @@ def signInView(request):
     context={}
     return render(request,'accounts/signin.html')
 
+@login_required(login_url='login')
+@allowed_user(roles=['Customer'])
 def customerProfileView(request):
     customer = request.user.customer
     form = CustomerProfileForm(instance=customer)
@@ -56,7 +62,7 @@ def customerProfileView(request):
         if form.is_valid():
             form.save()
             return redirect('customer-profile')
-
+    print(request.user.groups)
     context={'form':form}
     return render(request,'accounts/customer_profile.html',context)
 
@@ -65,18 +71,25 @@ def signOutView(request):
     logout(request)
     return redirect('home')
 
-
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
 def dashboardView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')[0:5]
     print(orders)
     context={'orders':orders}
     return render(request,'accounts/dashboard.html',context)
 
+
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
 def dashboardOrdersView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')
     context={'orders':orders}
     return render(request,'accounts/dashboard_orders.html',context)
 
+
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
 def dashboardOrderDetailsView(request,pk):
     
     orderitem = OrderItem.objects.get(id=pk)
@@ -95,6 +108,9 @@ def dashboardOrderDetailsView(request,pk):
         context={}
     return render(request,'accounts/dashboard_orderitemdetails.html',context)
 
+
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
 def dashboardProductsView(request):
     products=[]
     products = Product.objects.filter(vendor=request.user.vendor)
@@ -103,7 +119,8 @@ def dashboardProductsView(request):
     return render(request,'accounts/dashboard_products.html',context)
 
 
-
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST,request.FILES)

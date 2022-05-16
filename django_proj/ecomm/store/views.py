@@ -5,8 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .models import Product,CarouselBanner, SubCategory, Category
-from .forms import newUserForm
-from .decorators import *
 
 # Create your views here.
 
@@ -43,44 +41,6 @@ def productView(request,pk):
     product=Product.objects.get(slug=pk)
     context={'product':product}
     return render(request,'store/product.html',context)
-
-@unauthenticated_user
-def registerView(request):
-    form = newUserForm()
-    if request.method == 'POST':
-        form = newUserForm(request.POST)
-        print(form.error_messages)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-
-    context={'form':form}
-    return render(request,'store/register.html',context)
-
-@unauthenticated_user
-def logInView(request):
-    if request.method == 'POST':
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-
-        user = authenticate(request,username=username,password=password)
-        if user is not None:
-            login(request,user)
-            print('SUCCESS')
-            return redirect('home')
-        print('Fail')
-    context={}
-    return render(request,'store/login.html',context)
-
-def logOutView(request):
-    logout(request)
-    return redirect('home')
-
-@login_required(login_url='login')
-@allowed_user(roles=['Vendor'])
-def vendorDashboardView(request):
-
-    return render(request,'store/dashboard.html')
 
 def oudView(request):
     if request.GET.get('filter_by')=='HighToLow':

@@ -1,3 +1,4 @@
+from tokenize import String
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 from django.utils.text import slugify
@@ -94,6 +95,9 @@ class Order(models.Model):
     def get_total_items(self):
         orderitems = self.orderitem_set.all().count()
         return orderitems
+
+    def __str__(self):
+        return str(self.customer)
 
 class OrderItem(models.Model): # get total @property function
     choices=[

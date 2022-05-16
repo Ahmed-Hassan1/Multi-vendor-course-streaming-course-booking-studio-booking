@@ -49,12 +49,6 @@
                <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
-              <!--<li class="nav-item">
-                <a class="nav-link" href="#">String Instruments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Key Instruments</a>
-              </li> -->
               {% for item in menu_items %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'instruments' item.name %}">{{item.name}}</a>
