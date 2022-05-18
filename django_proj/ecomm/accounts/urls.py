@@ -9,9 +9,12 @@ urlpatterns=[
     path('signout/',signOutView,name='signout'),
     path('profile/',customerProfileView,name='customer-profile'),
     path('dashboard/',dashboardView,name='dashboard'),
+    path('dashboard-finances/',dashboardFinancesView,name='dashboard-finances'),
     path('dashboard-orders/',dashboardOrdersView,name='dashboard-orders'),
     path('dashboard-orders/<int:pk>/',dashboardOrderDetailsView,name='dashboard-ordersdetails'),
     path('dashboard-products/',dashboardProductsView,name='dashboard-products'),
+    path('dashboard-products/modify/<int:pk>/',dashboardProductsDetailsView,name='dashboard-productsdetails'),
+    path('dashboard-products/delete/<int:pk>/',dashboardProductsDeleteView,name='dashboard-productsdelete'),
     path('add-product/',add_product,name='add-product'),
 
     path('cart/',cartView,name='cart'),

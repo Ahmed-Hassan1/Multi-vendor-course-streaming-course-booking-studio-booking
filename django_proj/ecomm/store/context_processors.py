@@ -9,8 +9,10 @@ def store_menu(request):
 def cart_badge(request):
     if request.user.is_authenticated and request.user.is_customer:
         try:
-            cart_items = Order.objects.get(customer=request.user.customer).get_total_items
-        except:
+            customer = request.user.customer
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            cart_items = order.get_total_items
+        except Exception as e:
             cart_items=0
     else:
         try:
@@ -19,7 +21,6 @@ def cart_badge(request):
             cart = {}
         cart_items=0
         for i in cart:
-            cart_items += cart[i]['quantity']
-    print("Cart items",cart_items)
+            cart_items += int(cart[i]['quantity'])
 
     return {'cart_items':cart_items}

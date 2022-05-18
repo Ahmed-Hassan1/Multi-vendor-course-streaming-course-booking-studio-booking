@@ -57,7 +57,7 @@
                 <div style="flex:2"><img class="row-image" src="{{orderitem.product.imageURL}}"></div>
                 <div style="flex:2"><p>{{orderitem.product.name}}</p></div>
                 <div style="flex:1"><p>${{orderitem.product.price}}</p></div>
-                <div style="flex:1"><p>x1</p></div>
+                <div style="flex:1"><p>x{{orderitem.quantity}}</p></div>
             </div>
             {% endfor %}
 

@@ -88,13 +88,14 @@ class Order(models.Model):
     @property
     def get_total_price(self):
         orderitems = self.orderitem_set.all()
-        total = sum([orderitem.product.price for orderitem in orderitems])
+        total = sum([orderitem.price for orderitem in orderitems])
         return total
     
     @property
     def get_total_items(self):
-        orderitems = self.orderitem_set.all().count()
-        return orderitems
+        orderitems = self.orderitem_set.all()
+        total = sum([orderitem.quantity for orderitem in orderitems])
+        return total
 
     def __str__(self):
         return str(self.customer)
@@ -109,7 +110,15 @@ class OrderItem(models.Model): # get total @property function
 
     order = models.ForeignKey(Order,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    price = models.FloatField(default=0)
+    
     status = models.CharField(max_length=15,choices=choices,default='Processing')
+    
+    @property
+    def unit_price(self):
+        return self.price/self.quantity
+
     def __str__(self):
         return self.product.name
 
@@ -118,6 +127,9 @@ class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL,blank=True,null=True)
     order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
 
+
+    telephone = models.CharField(max_length=50,null=False)
+    name = models.CharField(max_length=200,null=False)
     address = models.CharField(max_length=250,null=False)
     city = models.CharField(max_length=50,null=False)
     state = models.CharField(max_length=50,null=False)

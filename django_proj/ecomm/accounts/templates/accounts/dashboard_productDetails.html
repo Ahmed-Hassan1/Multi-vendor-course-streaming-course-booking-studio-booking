@@ -30,64 +30,12 @@
 
 {% if user.vendor.is_activated %}
 <br>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
 
-<div class="d-flex">
-    <div class="d-flex flex-column">
-        <div>
-            ID: {{orderitem.id}}
-        </div>
-    
-        <div>
-            OrderID: {{orderitem.order.id}}
-        </div>
-    
-        <div>
-            Date: {{orderitem.order.date}}
-        </div>
-    
-        <div>
-            Product: {{orderitem.product}}
-        </div>
-    
-        <div>
-            Status: {{orderitem.status}}
-        </div>
-        
-        <br>
-        <div>
-            EDIT STATUS
-            <form action="" method="post">
-                {% csrf_token %}
-                {{form}}
-                <input type="submit" value="Submit" />
-            </form>
-            
-        </div>
-    </div>
-
-    <div>
-        <div>
-            Name: {{shipping.name}}
-        </div>
-
-        <div>
-            Telephone: {{shipping.telephone}}
-        </div>
-
-        <div>
-            Address: {{shipping.address}}
-        </div>
-
-        <div>
-            City: {{shipping.city}}
-        </div>
-
-        <div>
-            State: {{shipping.state}}
-        </div>
-    </div>
-</div>
-
+    <input type="submit" name="Edit" class="width-100pc btn btn-outline-primary">
+</form>
 
 
 

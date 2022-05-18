@@ -1,37 +1,51 @@
 var updateBtns = document.getElementsByClassName('update-cart');
 
+
 for (i=0; i<updateBtns.length; i++)
 {
     updateBtns[i].addEventListener('click', function(){
         var prodID = this.dataset.product;
         var action = this.dataset.action;
+        var prodQuant = $('#qty_input').val();
 
-        console.log('prodid: ',prodID,' Action: ',action);
-        console.log('User: ',user);
+        if(prodQuant == undefined)
+        {
+            prodQuant=1
+        }
 
         if ( user === 'AnonymousUser')
         {
-            addCookieItem(prodID,action);
+            addCookieItem(prodID,action,prodQuant);
         }
-        else updateUserOrder(prodID,action);
+        else updateUserOrder(prodID,action,prodQuant);
     })
 }
 
-function addCookieItem(prodID,action)
+function addCookieItem(prodID,action,prodQuant)
 {
-    console.log('Not loged in..');
 
-    if(action ==  'add')
+    if(action == 'add')
     {
-        if(cart[prodID]== undefined)
+        if(cart[prodID] == undefined)
         {
-            cart[prodID] = {'quantity':1}
+            cart[prodID] = {'quantity':parseInt(prodQuant)};
+        }
+        else
+        {
+            cart[prodID]['quantity'] += parseInt(prodQuant);
         }
     }
 
-    if(action ==  'remove')
+    if(action == 'remove')
     {
-        delete cart[prodID];
+        cart[prodID]['quantity'] -= 1;
+
+        if (cart[prodID]['quantity']<=0)
+        {
+            console.log('deleted item')
+            delete cart[prodID];
+        }
+        
     }
     console.log(cart)
 
@@ -39,9 +53,8 @@ function addCookieItem(prodID,action)
     location.reload()
 }
 
-function updateUserOrder(prodID,action)
+function updateUserOrder(prodID,action,prodQuant)
 {
-    console.log('user is logged');
 
     url = '/accounts/update-item/'
     fetch(url, {
@@ -52,7 +65,8 @@ function updateUserOrder(prodID,action)
         },
         body:JSON.stringify({
             'prodID': prodID,
-            'action': action
+            'action': action,
+            'prodQuant':prodQuant
         })
     }).then((response)=>{
         return response.json()
@@ -60,3 +74,23 @@ function updateUserOrder(prodID,action)
         location.reload()
     });
 }
+
+
+
+
+
+
+// Quant in product page
+$(document).ready(function(){
+    $('#qty_input').prop('disabled', true);
+    $('#plus-btn').click(function(){
+    	$('#qty_input').val(parseInt($('#qty_input').val()) + 1 );
+    	    });
+        $('#minus-btn').click(function(){
+    	$('#qty_input').val(parseInt($('#qty_input').val()) - 1 );
+    	if ($('#qty_input').val() == 0) {
+			$('#qty_input').val(1);
+		}
+
+    	    });
+ });

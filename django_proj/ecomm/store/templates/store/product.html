@@ -42,6 +42,26 @@
     <br>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta velit sit, provident saepe, reprehenderit rerum, culpa corrupti temporibus dolore placeat adipisci blanditiis similique. Non laborum, quod nihil distinctio id magnam.</p>
     <br>
+
+    <div class="container mt-5">
+      <div class="row">
+         <div class="col-sm-4"></div>
+         <div class="col-sm-4 col-sm-offset-4">
+             <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                     <button class="btn btn-dark btn-sm" id="minus-btn"><i class="fa fa-minus"></i></button>
+                 </div>
+                 <input type="number" id="qty_input" class="form-control form-control-sm text-center" value="1" min="1">
+                 <div class="input-group-prepend">
+                     <button class="btn btn-dark btn-sm" id="plus-btn"><i class="fa fa-plus"></i></button>
+                 </div>
+             </div>
+         </div>
+         <div class="col-sm-4"></div>
+     </div>
+    </div>
+
+
     <button data-product="{{product.id}}" data-action="add" class="btn btn-secondary update-cart" style="width: 100%;">Add to Cart</button>
 </div>
 

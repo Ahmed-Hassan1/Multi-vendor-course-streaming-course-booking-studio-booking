@@ -74,9 +74,18 @@ def signOutView(request):
 @login_required(login_url='login')
 @allowed_user(roles=['Vendor'])
 def dashboardView(request):
-    orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')[0:5]
-    print(orders)
-    context={'orders':orders}
+    orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor)
+
+    recentOrders = orders.order_by('-order__date')[0:5]
+
+    print("Orders: ",orders)
+    print("RECENT: ",recentOrders)
+    newOrders = orders.filter(status='Processing').count()
+
+    processingSales = 0
+    for order in orders:
+        processingSales+=order.price
+    context={'recentOrders':recentOrders, 'newOrders':newOrders,'processingSales':processingSales}
     return render(request,'accounts/dashboard.html',context)
 
 
@@ -84,7 +93,17 @@ def dashboardView(request):
 @allowed_user(roles=['Vendor'])
 def dashboardOrdersView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')
-    context={'orders':orders}
+
+    processingOrders = orders.filter(status='Processing').count()
+    shippedOrders = orders.filter(status='Shipped').count()
+    deliveredOrders = orders.filter(status='Delivered').count()
+
+    context={
+        'orders':orders,
+        'processingOrders':processingOrders,
+        'shippedOrders':shippedOrders,
+        'deliveredOrders':deliveredOrders
+        }
     return render(request,'accounts/dashboard_orders.html',context)
 
 
@@ -93,7 +112,11 @@ def dashboardOrdersView(request):
 def dashboardOrderDetailsView(request,pk):
     
     orderitem = OrderItem.objects.get(id=pk)
+    shipping = ShippingAddress.objects.filter(order=orderitem.order)
+    print(shipping[0].name)
+
     form = OrderForm(instance = orderitem)
+    
     if request.method == 'POST':
         form = OrderForm(request.POST, instance=orderitem)
         print('inside POST')
@@ -103,7 +126,7 @@ def dashboardOrderDetailsView(request,pk):
             return redirect('dashboard-ordersdetails',pk=orderitem.id)
 
     if request.user.vendor == orderitem.product.vendor:
-        context = {'orderitem':orderitem,'form':form}
+        context = {'orderitem':orderitem,'form':form,'shipping':shipping[0]}
     else:
         context={}
     return render(request,'accounts/dashboard_orderitemdetails.html',context)
@@ -117,6 +140,34 @@ def dashboardProductsView(request):
 
     context={'products':products}
     return render(request,'accounts/dashboard_products.html',context)
+
+
+#Modify the product
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
+def dashboardProductsDetailsView(request,pk):
+    product = Product.objects.get(id=pk)
+    form = ProductForm(instance=product)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard-productsdetails',pk=product.id)
+    context={'form':form}
+    return render(request,'accounts/dashboard_productDetails.html',context)
+
+    
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
+def dashboardProductsDeleteView(request,pk):
+    product = Product.objects.get(id=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('dashboard-products')
+    context={'product':product}
+    return render(request,'accounts/dashboard_productDelete.html',context)
+        
 
 
 @login_required(login_url='login')
@@ -136,6 +187,38 @@ def add_product(request):
     context={'form':form}
     return render(request,'accounts/add_product.html',context)
 
+
+
+@login_required(login_url='login')
+@allowed_user(roles=['Vendor'])
+def dashboardFinancesView(request):
+    #Money in account
+    #Money recieved
+    #Total sales
+    orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor)
+
+    processingOrders = orders.filter(status = 'Processing')
+    processingSales = 0
+    for item in processingOrders:
+        processingSales+=item.price
+
+    shippedOrders = orders.filter(status = 'Shipped')
+    shippedSales = 0
+    for item in shippedOrders:
+        shippedSales+=item.price
+
+    deliveredOrders = orders.filter(status = 'Delivered')
+    deliveredSales = 0
+    for item in deliveredOrders:
+        deliveredSales+=item.price
+
+
+
+    context={
+        'processingSales':processingSales,
+        'deliveredSales':deliveredSales,
+        'shippedSales':shippedSales,}
+    return render(request,'accounts/dashboard_finances.html',context)
 
 
 
@@ -168,8 +251,11 @@ def cartView(request):
                     'price':product.price,
                     'imageURL':product.imageURL
                 },
+                'quantity':cart[i]['quantity'],
+                'price': price,
             }
             orderitems.append(item)
+        print(orderitems)
 
     context = {'orderitems':orderitems, 'order':order}
     return render(request,'accounts/cart.html',context)
@@ -203,6 +289,8 @@ def checkoutView(request):
                     'price':product.price,
                     'imageURL':product.imageURL
                 },
+                'quantity':cart[i]['quantity'],
+                'price': price,
             }
             orderitems.append(item)
     context = {'orderitems':orderitems, 'order':order}
@@ -212,15 +300,26 @@ def updateItem(request):
     data = json.loads(request.body)
     prodID=data['prodID']
     action=data['action']
+    prodQuant=data['prodQuant']
 
     customer = request.user.customer
     product = Product.objects.get(id=prodID)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-    orderItem.save()
-    if action == 'remove':
-        orderItem.delete()
 
+    
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+    
+    if action == 'add':
+        orderItem.quantity= (orderItem.quantity + int(prodQuant))
+    elif action == 'remove':
+        orderItem.quantity= (orderItem.quantity - 1)
+
+    orderItemPrice=product.price*orderItem.quantity
+    orderItem.price = orderItemPrice
+    orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
     return JsonResponse('Item added', safe=False)
 
 
@@ -244,13 +343,14 @@ def processOrder(request):
         ShippingAddress.objects.create(
             customer = customer,
             order = order,
+            telephone = customer.phone_number,
+            name = customer.first_name +" "+customer.last_name,
             address = data['shippingData']['address'],
             city = data['shippingData']['city'],
             state = data['shippingData']['state'],
 
         )
     else:
-        #Store the guest name for the order they created for shipping
         print('not logged in')
         print('COOKIES: ',request.COOKIES)
         name = data['userFormData']['name']
@@ -276,6 +376,8 @@ def processOrder(request):
                     'price':product.price,
                     'imageURL':product.imageURL
                 },
+                'quantity':cart[i]['quantity'],
+                'price': price,
             }
             orderitems.append(item)
 
@@ -290,6 +392,8 @@ def processOrder(request):
             orderItem = OrderItem.objects.create(
                 order=order,
                 product=product,
+                quantity=item['quantity'],
+                price=item['price'],
             )
         
         totalPrice = float(data['userFormData']['total'])
@@ -297,11 +401,12 @@ def processOrder(request):
 
         if totalPrice == order.get_total_price:
             order.complete = True
-        #Validate the order before saving it the total price
         order.save()
 
         ShippingAddress.objects.create(
             order = order,
+            telephone=email,
+            name = name,
             address = data['shippingData']['address'],
             city = data['shippingData']['city'],
             state = data['shippingData']['state'],

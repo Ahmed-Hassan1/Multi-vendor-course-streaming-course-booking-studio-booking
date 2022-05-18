@@ -4,7 +4,7 @@
 {% block content %}
 
 <div>
-    <h1 class="text-center">Products</h1>
+    <h1 class="text-center">Finances</h1>
     <h3 class="text-center">{{user.vendor}}</h3>
 </div>
 
@@ -34,32 +34,21 @@
     {% endwith %}
 </div>
 
-<h1>Products</h1>
-<a href="{% url 'add-product' %}" class="btn btn-outline-primary">Add Product</a>
-<table class="table table-striped">
-    <thead>
-        <th>Name</th>
-        <th>Price</th>
-        <th>SubCat</th>
-        <th>Cat</th>
-        <th>Image</th>
-        <th>Modify Product</th>
-        <th>Delete Product</th>
-    </thead>
-    <tbody>
-        {% for product in products %}
-        <tr>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.subCategory}}</td>
-            <td>{{product.category}}</td>
-            <td><img class="row-image" src="{{product.imageURL}}"></td>
-            <td><a class="btn btn-outline-primary" href="{% url 'dashboard-productsdetails' product.id %}">Modify</a></td>
-            <td><a class="btn btn-danger" href="{% url 'dashboard-productsdelete' product.id %}">DELETE</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<h3>Finances Details</h3>
+<ul class="list-group" style="max-width: 400px;">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Sales of orders still processing
+        <span class="badge bg-primary rounded-pill">{{processingSales}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Sales of orders on delivery
+        <span class="badge bg-primary rounded-pill">{{shippedSales}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Sales of orders delievered
+        <span class="badge bg-primary rounded-pill">{{deliveredSales}}</span>
+    </li>
+</ul>
 
 {% else %}
     <p>Please wait for activiation</p>
