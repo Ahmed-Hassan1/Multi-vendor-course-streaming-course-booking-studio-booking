@@ -43,6 +43,8 @@
         <th>SubCat</th>
         <th>Cat</th>
         <th>Image</th>
+        <th>View Product</th>
+        <th>Activate</th>
         <th>Modify Product</th>
         <th>Delete Product</th>
     </thead>
@@ -54,6 +56,14 @@
             <td>{{product.subCategory}}</td>
             <td>{{product.category}}</td>
             <td><img class="row-image" src="{{product.imageURL}}"></td>
+            <td><a class="btn btn-outline-secondary" href="{% url 'product' product.slug %}">View</a></td>
+            <td>
+                {% if product.activate %}
+                    <div class="bg-success">Activated</div>
+                {% else %}
+                    <div class="bg-secondary">De-activated</div>
+                {% endif %}
+            </td>
             <td><a class="btn btn-outline-primary" href="{% url 'dashboard-productsdetails' product.id %}">Modify</a></td>
             <td><a class="btn btn-danger" href="{% url 'dashboard-productsdelete' product.id %}">DELETE</a></td>
         </tr>

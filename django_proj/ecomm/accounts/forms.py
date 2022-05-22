@@ -3,7 +3,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.core.mail import send_mail
-from .models import CustomUser, Customer, Vendor
+from .models import CustomUser, Customer, Vendor, VendorPayments
 from store.models import Product,OrderItem
 
 
@@ -96,3 +96,33 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = OrderItem
         fields = ['status']
+
+
+class VendorPaymentsForm(forms.ModelForm):
+    class Meta:
+        model = VendorPayments
+        fields = '__all__'
+
+    def clean_payments(self):
+        payments=self.cleaned_data['payments']
+        x=self.data['vendor']
+        
+        orders = OrderItem.objects.all().filter(order__complete=True,product__vendor__customuser__id=x)
+        deliveredOrders = orders.filter(status = 'Delivered')
+        deliveredSales = 0
+        for item in deliveredOrders:
+            deliveredSales+=item.price
+
+        vendorPayments = VendorPayments.objects.all().filter(vendor__customuser__id=x)
+        totalPayments=0
+        for payment in vendorPayments:
+            totalPayments+=payment.payments
+
+        total = deliveredSales-totalPayments
+        print('payments: ',payments,'  Sales: ',deliveredSales, '  totalPays: ',totalPayments,'  Net:',total)
+        if payments > total:
+            raise forms.ValidationError('The money is more then the account only has: '+ str(total))
+        
+
+        return payments
+

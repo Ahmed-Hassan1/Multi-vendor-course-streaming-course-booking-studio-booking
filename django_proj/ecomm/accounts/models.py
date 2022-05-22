@@ -31,3 +31,11 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.company_name
+
+class VendorPayments(models.Model):
+    vendor = models.ForeignKey(Vendor,on_delete=models.SET_NULL,null=True)
+    payments = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.vendor.company_name

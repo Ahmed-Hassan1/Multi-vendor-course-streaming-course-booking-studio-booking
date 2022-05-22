@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, Customer, Vendor
+from .models import CustomUser, Customer, Vendor, VendorPayments
+from .forms import VendorPaymentsForm
 # Register your models here.
 
 # class CustomUserAdmin(UserAdmin):
@@ -17,3 +18,10 @@ from .models import CustomUser, Customer, Vendor
 admin.site.register(CustomUser)
 admin.site.register(Customer)
 admin.site.register(Vendor)
+
+
+class VendorPaymentsAdmin(admin.ModelAdmin):
+    form = VendorPaymentsForm
+    list_display = ['vendor','payments']
+
+admin.site.register(VendorPayments,VendorPaymentsAdmin)

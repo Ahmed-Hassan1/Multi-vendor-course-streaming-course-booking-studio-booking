@@ -41,7 +41,12 @@ class Product(models.Model):
     slug = models.SlugField(max_length=200,null=True,blank=True)
     price = models.FloatField()
     image = models.ImageField(null=True,blank=True)
+    image2 = models.ImageField(null=True,blank=True)
+    image3 = models.ImageField(null=True,blank=True)
+    image4 = models.ImageField(null=True,blank=True)
+    image5 = models.ImageField(null=True,blank=True)
     vendor = models.ForeignKey(Vendor,null=True,on_delete=models.CASCADE)
+    activate = models.BooleanField(default=True,null=True)
 
     def __str__(self):
         return self.name
@@ -53,6 +58,35 @@ class Product(models.Model):
         except:
             url = ''
         return url
+    @property
+    def image2URL(self):
+        try:
+            url = self.image2.url
+        except:
+            url = ''
+        return url
+    @property
+    def image3URL(self):
+        try:
+            url = self.image3.url
+        except:
+            url = ''
+        return url
+    @property
+    def image4URL(self):
+        try:
+            url = self.image4.url
+        except:
+            url = ''
+        return url
+    @property
+    def image5URL(self):
+        try:
+            url = self.image5.url
+        except:
+            url = ''
+        return url
+    
 
 import string
 import random
@@ -80,7 +114,7 @@ pre_save.connect(pre_save_reciever,sender=Product)
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete=models.CASCADE)#modify the delete to keep the records
+    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete=models.SET_NULL)
     date = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False,null=True)
     transaction_id = models.CharField(max_length=200,null=True)
@@ -103,13 +137,13 @@ class Order(models.Model):
 class OrderItem(models.Model): # get total @property function
     choices=[
         ('Processing','Processing'),
-        ('Shipped','Shipped'),
+        ('Shipping','Shipped'),
         ('Delivered','Delivered'),
     ]
 
 
     order = models.ForeignKey(Order,on_delete=models.CASCADE)
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
     quantity = models.IntegerField(default=0)
     price = models.FloatField(default=0)
     

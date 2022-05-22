@@ -62,7 +62,6 @@ def customerProfileView(request):
         if form.is_valid():
             form.save()
             return redirect('customer-profile')
-    print(request.user.groups)
     context={'form':form}
     return render(request,'accounts/customer_profile.html',context)
 
@@ -82,9 +81,10 @@ def dashboardView(request):
     print("RECENT: ",recentOrders)
     newOrders = orders.filter(status='Processing').count()
 
+    processingOrders = orders.filter(status = 'Processing')
     processingSales = 0
-    for order in orders:
-        processingSales+=order.price
+    for item in processingOrders:
+        processingSales+=item.price
     context={'recentOrders':recentOrders, 'newOrders':newOrders,'processingSales':processingSales}
     return render(request,'accounts/dashboard.html',context)
 
@@ -95,13 +95,13 @@ def dashboardOrdersView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')
 
     processingOrders = orders.filter(status='Processing').count()
-    shippedOrders = orders.filter(status='Shipped').count()
+    shippingOrders = orders.filter(status='Shipping').count()
     deliveredOrders = orders.filter(status='Delivered').count()
 
     context={
         'orders':orders,
         'processingOrders':processingOrders,
-        'shippedOrders':shippedOrders,
+        'shippingOrders':shippingOrders,
         'deliveredOrders':deliveredOrders
         }
     return render(request,'accounts/dashboard_orders.html',context)
@@ -148,9 +148,8 @@ def dashboardProductsView(request):
 def dashboardProductsDetailsView(request,pk):
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)
-
     if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
+        form = ProductForm(request.POST,request.FILES, instance=product)
         if form.is_valid():
             form.save()
             return redirect('dashboard-productsdetails',pk=product.id)
@@ -202,10 +201,10 @@ def dashboardFinancesView(request):
     for item in processingOrders:
         processingSales+=item.price
 
-    shippedOrders = orders.filter(status = 'Shipped')
-    shippedSales = 0
-    for item in shippedOrders:
-        shippedSales+=item.price
+    shippingOrders = orders.filter(status = 'Shipping')
+    shippingSales = 0
+    for item in shippingOrders:
+        shippingSales+=item.price
 
     deliveredOrders = orders.filter(status = 'Delivered')
     deliveredSales = 0
@@ -214,10 +213,19 @@ def dashboardFinancesView(request):
 
 
 
+    payments= VendorPayments.objects.all().filter(vendor=request.user.vendor)
+    totalPayments=0
+    for payment in payments:
+        totalPayments+=payment.payments
+
+    moneyInAccount = deliveredSales-totalPayments
+
     context={
         'processingSales':processingSales,
         'deliveredSales':deliveredSales,
-        'shippedSales':shippedSales,}
+        'shippingSales':shippingSales,
+        'totalPayments':totalPayments,
+        'moneyInAccount':moneyInAccount}
     return render(request,'accounts/dashboard_finances.html',context)
 
 

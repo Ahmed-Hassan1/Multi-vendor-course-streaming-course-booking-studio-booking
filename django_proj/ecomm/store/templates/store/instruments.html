@@ -2,13 +2,25 @@
 {% load static %}
 
 {% block content %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{subs}}</li>
+    </ol>
+</nav>
+
 <!-- Banner of category in DB add image field -->
 <img src="{% static 'images/string_banner.webp' %}" alt="" class="img-fluid shadow mb-4 bg-body rounded">
+
+
+
 
 {% for subCat in subCats %}
 <!-- Single section Carousel -->
 <div class="shadow mb-4 bg-body rounded scroll">
     <!-- header -->
+    
     <div>
         <div class="d-flex justify-content-between align-items-center" style="background-color: #dce0e7;">
         <h2 class="text-center">{{subCat.name}}</h2>

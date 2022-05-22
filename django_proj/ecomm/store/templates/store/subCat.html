@@ -4,8 +4,17 @@
 {% block content %}
 
 <div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item" ><a href="{% url 'instruments' subs.name %}">{{subs}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{subCat}}</li>
+    </ol>
+  </nav>
         
     <img src="https://via.placeholder.com/730x300" alt="" class="img-fluid shadow mb-4 bg-body rounded">
+
+
 
   <!-- Single section Carousel -->
   <!-- <div class="shadow mb-4 bg-body rounded scroll"> -->

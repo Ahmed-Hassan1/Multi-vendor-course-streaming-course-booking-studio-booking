@@ -35,19 +35,34 @@
 </div>
 
 <h3>Finances Details</h3>
-<ul class="list-group" style="max-width: 400px;">
+<ul class="list-group mb-5" style="max-width: 400px;">
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Sales of orders still processing
         <span class="badge bg-primary rounded-pill">{{processingSales}}</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Sales of orders on delivery
-        <span class="badge bg-primary rounded-pill">{{shippedSales}}</span>
+        <span class="badge bg-primary rounded-pill">{{shippingSales}}</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Sales of orders delievered
         <span class="badge bg-primary rounded-pill">{{deliveredSales}}</span>
     </li>
+</ul>
+
+<h3>Payment Details</h3>
+<ul class="list-group" style="max-width: 400px;">
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Money In Account
+        <span class="badge bg-primary rounded-pill">{{moneyInAccount}}</span>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Total Payments
+        <span class="badge bg-primary rounded-pill">{{totalPayments}}</span>
+    </li>
+    
 </ul>
 
 {% else %}
