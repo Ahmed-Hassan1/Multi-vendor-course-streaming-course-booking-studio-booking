@@ -40,7 +40,8 @@
         <br>
         <div class="box-element hidden" id="payment-info">
             <small>Paypal Options</small>
-            <button id="make-payment">Make payment</button>
+            <!-- <button id="make-payment">Make payment</button> -->
+            <a class="btn btn-primary" href="https://accept.paymob.com/api/acceptance/iframes/384653?payment_token={{payment_token}}">PayMob</a>
             <div id="paypal-button-container"></div>
         </div>
         
@@ -91,9 +92,9 @@
     });
 
 
-    document.getElementById('make-payment').addEventListener('click', function(e){
-        submitFormData()
-    });
+    // document.getElementById('make-payment').addEventListener('click', function(e){
+    //     submitFormData()
+    // });
 
     function submitFormData(){
         console.log('payment button clicked');

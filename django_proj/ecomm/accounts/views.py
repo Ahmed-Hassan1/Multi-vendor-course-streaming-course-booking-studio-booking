@@ -7,6 +7,8 @@ from django.views.generic import CreateView
 from django.utils.decorators import method_decorator
 import json
 import datetime
+import requests
+from decouple import config
 
 from .models import CustomUser, Customer, Vendor
 from .forms import *
@@ -264,17 +266,19 @@ def cartView(request):
             }
             orderitems.append(item)
         print(orderitems)
-
+    
     context = {'orderitems':orderitems, 'order':order}
     return render(request,'accounts/cart.html',context)
 
 def checkoutView(request):
+    x_price=0
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         orderitems = order.orderitem_set.all()
         print(order)
         print(orderitems)
+        x_price+=order.get_total_price
         
     else:
         try:
@@ -301,7 +305,67 @@ def checkoutView(request):
                 'price': price,
             }
             orderitems.append(item)
-    context = {'orderitems':orderitems, 'order':order}
+        x_price+=order['get_total_price']
+    
+    
+    r= requests.post("https://accept.paymob.com/api/auth/tokens",
+    json={
+        "api_key":config('PayMob_api')
+    }
+    )
+    first_token = r.json()['token']
+
+    request_items=[]
+    for item in orderitems:
+        request_items.append(
+            {
+                "name": item['product']['name'],
+                "amount_cents": item['price'],
+                "description": item['product']['name'],
+                "quantity": item['quantity']
+            }
+        )
+    
+    r= requests.post("https://accept.paymob.com/api/ecommerce/orders",
+    json={
+        "auth_token": first_token,
+        "delivery_needed": "false",
+        "amount_cents": x_price,
+        "currency": "EGP",
+        "items": request_items,
+    }
+    )
+    order_id = r.json()['id']
+
+    r= requests.post("https://accept.paymob.com/api/acceptance/payment_keys",
+    json={
+        "auth_token": first_token,
+        "delivery_needed": "false",
+        "amount_cents": order['get_total_price']*100,
+        "expiration": 3600,
+        "order_id": order_id,
+        "billing_data": {
+            "apartment": "NA", 
+            "email": "claudette09@exa.com", 
+            "floor": "NA", 
+            "first_name": "Clifford", 
+            "street": "NA", 
+            "building": "NA", 
+            "phone_number": "+86(8)9135210487", 
+            "shipping_method": "NA", 
+            "postal_code": "NA", 
+            "city": "NA", 
+            "country": "NA", 
+            "last_name": "Nicolas", 
+            "state": "NA"
+        },
+        "currency": "EGP", 
+        "integration_id": 2082053
+    }
+    )
+    payment_token = order_id = r.json()['token']
+
+    context = {'orderitems':orderitems, 'order':order,'payment_token':payment_token}
     return render(request,'accounts/checkout.html',context)
 
 def updateItem(request):
@@ -421,4 +485,14 @@ def processOrder(request):
 
         )
 
+
+
     return JsonResponse('Payment Complete', safe=False)
+
+
+
+def test(items,order):
+    
+
+
+    print()
