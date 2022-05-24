@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.urls import path
 from .views import *
 
@@ -21,4 +20,6 @@ urlpatterns=[
     path('checkout/',checkoutView,name='checkout'),
     path('update-item/',updateItem,name='updateitem'),
     path('process-order/',processOrder,name='processorder'),
+    path('callback/',callBack,name='callback'),
+    path('payment-response/',paymentResponse,name='payment-response'),
 ]

@@ -1,0 +1,79 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if paymentStatus == 'true' %}
+<h1>Payment Sucessfull. Redirect to home page in 3 seconds.</h1>
+
+<script type="text/javascript"> submitFormData() </script>
+{% else %}
+<h1>Payment Failed. Redirect to Checkout in 3 seconds.</h1>
+
+<script type="text/javascript">
+    var timer = setTimeout(function(){
+                window.location.href = "{% url 'checkout' %}";
+            },3000);
+</script>
+{% endif %}
+
+
+
+
+<script type="text/javascript">
+
+    var totalPrice = '{{total_price}}'
+
+
+    // document.getElementById('make-payment').addEventListener('click', function(e){
+    //     submitFormData()
+    // });
+
+    function submitFormData(){
+
+        var userFormData = {
+            'name':null,
+            'email':null,
+            'total':totalPrice,
+        }
+
+        var shippingData = {
+            'address':form.address.value,
+            'city':form.city.value,
+            'state':form.state.value,
+        }
+
+        if('{{user}}' == 'AnonymousUser')
+        {
+            userFormData.name = form.name.value
+            userFormData.email = form.email.value
+        }
+
+        url = '/accounts/process-order/'
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFTOKEN':csrftoken,
+            },
+            body:JSON.stringify({
+                'userFormData': userFormData,
+                'shippingData': shippingData
+            })
+        }).then((response)=>{
+            return response.json()
+        }).then((data)=>{
+            alert('Transaction Complete');
+            cart = {};
+            document.cookie = 'cart='+ JSON.stringify(cart) + ";domian=;path=/"
+            var timer = setTimeout(function(){
+                window.location.href = "{% url 'home' %}";
+            },3000);
+            
+        });
+        }
+
+</script>
+
+
+{% endblock content %}

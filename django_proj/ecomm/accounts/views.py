@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView
 from django.utils.decorators import method_decorator
 import json
@@ -316,15 +318,30 @@ def checkoutView(request):
     first_token = r.json()['token']
 
     request_items=[]
+    orderPrice = 0
     for item in orderitems:
-        request_items.append(
-            {
-                "name": item['product']['name'],
-                "amount_cents": item['price'],
-                "description": item['product']['name'],
-                "quantity": item['quantity']
-            }
-        )
+        if type(item) is dict:
+            request_items.append(
+                {
+                    "name": item['product']['name'],
+                    "amount_cents": item['price'],
+                    "description": item['product']['name'],
+                    "quantity": item['quantity']
+                }
+            )
+        else:
+            request_items.append(
+                {
+                    "name": item.product.name,
+                    "amount_cents": item.price,
+                    "description": item.product.name,
+                    "quantity": item.quantity
+                }
+            )
+    if type(order) is dict:
+        orderPrice+=order['get_total_price']
+    else:
+        orderPrice+=order.get_total_price
     
     r= requests.post("https://accept.paymob.com/api/ecommerce/orders",
     json={
@@ -341,7 +358,7 @@ def checkoutView(request):
     json={
         "auth_token": first_token,
         "delivery_needed": "false",
-        "amount_cents": order['get_total_price']*100,
+        "amount_cents": orderPrice*100,
         "expiration": 3600,
         "order_id": order_id,
         "billing_data": {
@@ -367,6 +384,27 @@ def checkoutView(request):
 
     context = {'orderitems':orderitems, 'order':order,'payment_token':payment_token}
     return render(request,'accounts/checkout.html',context)
+
+
+#process the callback
+@csrf_exempt
+@require_POST
+def callBack(request):
+    payload = json.loads(request.body)
+
+    response = {
+        'pending':payload['obj']['pending'],
+        'success':payload['obj']['success']
+    }
+    return HttpResponse('Recieved callback',response)
+
+def paymentResponse(request):
+    print("RESPONSE: ",request.GET)
+    paymentStatus = request.GET['success']
+    total_price = float(request.GET['amount_cents'])/100
+    print("status: ",paymentStatus," price: ",total_price)
+    context={'paymentStatus':paymentStatus,'total_price':total_price}
+    return render(request,'accounts/paymentResponse.html',context)
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -488,11 +526,3 @@ def processOrder(request):
 
 
     return JsonResponse('Payment Complete', safe=False)
-
-
-
-def test(items,order):
-    
-
-
-    print()
