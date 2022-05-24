@@ -7,29 +7,14 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-      <li class="breadcrumb-item" ><a href="{% url 'instruments' subs.name %}">{{subs}}</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{subCat}}</li>
+      <li class="breadcrumb-item active" aria-current="page">New</li>
     </ol>
   </nav>
         
-    <img src="{{subCat.imageURL_banner}}" alt="" class="img-fluid shadow mb-4 bg-body rounded">
+    <img src="https://via.placeholder.com/730x300" alt="" class="img-fluid shadow mb-4 bg-body rounded">
 
 
     <div class="container mb-4">
-      <section>
-        <div class="mb-5 mt-3 d-flex flex-column align-items-center">
-          <div>
-            <form name="myform" id ="myform" method="get">
-              <select name="filter_by" onchange="submitform();" class="btn btn-outline-secondary">
-                  <option selected>{{sorting}}</option>
-                  <option value="new">New Additions</option>
-                  <option value="HighToLow">Price Highest to Lowest</option>
-                  <option value="LowToHigh">Price Lowest to Highest</option>
-              </select>
-            </form>
-          </div>
-        </div>
-    </section>
 
         <div class="row">
             {% for product in products %}

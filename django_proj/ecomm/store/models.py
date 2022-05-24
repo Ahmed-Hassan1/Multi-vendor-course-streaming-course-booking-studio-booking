@@ -7,13 +7,10 @@ from accounts.models import Vendor, Customer
 
 # Create your models here.
 
-#Main Category Type of instrument
-#Sub Category Instrument itself Oud,Guitar
-#Product item itself
-
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    image = models.ImageField(null=True,blank=True)
+    homePageImage = models.ImageField(null=True,blank=True)
+    BannerImage = models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -21,7 +18,15 @@ class Category(models.Model):
     @property
     def imageURL(self):
         try:
-            url = self.image.url
+            url = self.homePageImage.url
+        except:
+            url = ''
+        return url
+
+    @property
+    def imageURL_banner(self):
+        try:
+            url = self.BannerImage.url
         except:
             url = ''
         return url
@@ -29,16 +34,25 @@ class Category(models.Model):
 class SubCategory(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True)
+    BannerImage = models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL_banner(self):
+        try:
+            url = self.BannerImage.url
+        except:
+            url = ''
+        return url
 
 class Product(models.Model):
     #add date timestamp
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True)
     subCategory = ChainedForeignKey(SubCategory,'category','category',False,True)
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200,null=True,blank=True)
+    slug = models.SlugField(max_length=200,null=True,blank=True,allow_unicode=True)
     price = models.FloatField()
     image = models.ImageField(null=True,blank=True)
     image2 = models.ImageField(null=True,blank=True)
@@ -90,15 +104,17 @@ class Product(models.Model):
 
 import string
 import random
-def random_string_generator(size = 10, chars = string.ascii_lowercase + string.digits): 
+def random_string_generator(size = 10, chars = string.ascii_lowercase + string.digits):
+    print("RANDOM_STRING: ",''.join(random.choice(chars) for _ in range(size))) 
     return ''.join(random.choice(chars) for _ in range(size))
 
 def unique_slug(instance, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        slug = slugify(instance.name)
-
+        print("INSTANCE_NAME: ",instance.name)
+        slug = slugify(instance.name,allow_unicode=True)#allow unicode in slugify function
+    print("UNIQUE_SLUG: ",slug)
     Klass = instance.__class__ 
     qs_exists = Klass.objects.filter(slug = slug).exists()
     if qs_exists:
