@@ -3,13 +3,47 @@
 
 {% block content %}
 
-<h1>Profile of: {{user.username}}</h1>
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-
-    <input type="submit" name="Edit" class="width-100pc btn btn-outline-primary">
-</form>
+<div class="container">
+    <h1>Welcome {{user.email}}</h1>
+    <ul class="list-group" style="max-width: 400px;">
+        <a href="{% url 'customer-profile-details' %}">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div>Account Details</div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>  
+            </li>
+        </a>
+        
+    
+        <a href="{% url 'customer-profile-orders' %}">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div>Orders</div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>  
+            </li>
+        </a>
+    
+        <a href="">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div>Address Book "Under Construction"</div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>  
+            </li>
+        </a>
+    
+        <a href="">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div>Change Password</div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>  
+            </li>
+        </a>
+    </ul>
+</div>
 
 
 {% endblock content %}

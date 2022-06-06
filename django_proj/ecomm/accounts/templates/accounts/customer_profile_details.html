@@ -1,0 +1,22 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex justify-content-start mb-5">
+    <a href="{% url 'customer-profile' %}">
+        <i class="bi bi-arrow-left ps-2"></i>
+    </a> 
+    <div class="ps-5">Account Details</div>
+    
+</div>
+{{ form.errors }}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    {{phone_form.as_p}}
+
+    <input type="submit" name="Edit" class="width-100pc btn btn-outline-primary">
+</form>
+
+{% endblock content %}

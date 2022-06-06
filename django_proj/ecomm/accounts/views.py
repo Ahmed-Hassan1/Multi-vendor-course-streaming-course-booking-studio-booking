@@ -26,8 +26,8 @@ class CustomerSignUpView(CreateView):
 
     def form_valid(self,form):
         user=form.save()
-        login(self.request,user)
-        return redirect('home')
+        #login(self.request,user)
+        return redirect('signin')
 
 @method_decorator(unauthenticated_user,name='dispatch')
 class VendorSignUpView(CreateView):
@@ -37,37 +37,82 @@ class VendorSignUpView(CreateView):
 
     def form_valid(self,form):
         user=form.save()
-        login(self.request,user)
-        return redirect('home')
+        #login(self.request,user)
+        return redirect('signin')
 
 @unauthenticated_user
 def signInView(request):
     if request.method == 'POST':
-        username=request.POST.get('username')
+        email=request.POST.get('email')
         password=request.POST.get('password')
 
-        user = authenticate(request,username=username,password=password)
+        user = authenticate(request,username=email,password=password)
         if user is not None:
             login(request,user)
-            print('SUCCESS')
+            print('SUCCESS LOGIN')
             return redirect('home')
-        print('Fail')
+        print('FAIL LOGIN')
     context={}
     return render(request,'accounts/signin.html')
 
 @login_required(login_url='login')
 @allowed_user(roles=['Customer'])
 def customerProfileView(request):
-    customer = request.user.customer
-    form = CustomerProfileForm(instance=customer)
+    
+    context={}
+    return render(request,'accounts/customer_profile.html',context)
 
+@login_required(login_url='login')
+@allowed_user(roles=['Customer'])
+def customerProfileDetailsView(request):
+
+    customer = request.user.customer
+    phone_form=CustomUserProfileForm(instance=request.user)
+    form = CustomerProfileForm(instance=customer)
     if request.method == 'POST':
         form = CustomerProfileForm(request.POST, instance=customer)
-        if form.is_valid():
+        phone_form=CustomUserProfileForm(request.POST,instance=request.user)
+        if form.is_valid() and phone_form.is_valid():
             form.save()
-            return redirect('customer-profile')
-    context={'form':form}
-    return render(request,'accounts/customer_profile.html',context)
+            phone_form.save()
+            return redirect('customer-profile-details')
+    context={'form':form,'phone_form':phone_form}
+    return render(request,'accounts/customer_profile_details.html',context)
+
+
+@login_required(login_url='login')
+@allowed_user(roles=['Customer'])
+def customerProfileOrdersView(request):
+    orders = Order.objects.all().filter(customer=request.user.customer)
+    orderItems = OrderItem.objects.all().filter(order__customer=request.user.customer)
+    context={'orderItems':orderItems,'orders':orders}
+    return render(request,'accounts/customer_profile_orders.html',context)
+
+
+@login_required(login_url='login')
+@allowed_user(roles=['Customer'])
+def customerProfileOrdersDetailsView(request,pk):
+    order = Order.objects.get(id=pk)
+    orderItems = OrderItem.objects.all().filter(order=order)
+    context={'orderItems':orderItems,'order':order}
+    return render(request,'accounts/customer_profile_orders_details.html',context)
+
+
+@login_required(login_url='login')
+@allowed_user(roles=['Customer'])
+def customerProfileAddressView(request):
+    addresses = ShippingAddress.objects.all().filter(customer=request.user.customer)
+    print(addresses)
+    context={'addresses':addresses}
+    return render(request,'accounts/customer_profile_address.html',context)
+
+@login_required(login_url='login')
+@allowed_user(roles=['Customer'])
+def customerProfilePasswordView(request):
+
+    context={}
+    return render(request,'accounts/customer_profile_password.html',context)
+
 
 def signOutView(request):
 
@@ -239,8 +284,6 @@ def cartView(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         orderitems = order.orderitem_set.all()
-        print(order)
-        print(orderitems)
         
     else:
         try:
@@ -267,20 +310,17 @@ def cartView(request):
                 'price': price,
             }
             orderitems.append(item)
-        print(orderitems)
     
     context = {'orderitems':orderitems, 'order':order}
     return render(request,'accounts/cart.html',context)
 
 def checkoutView(request):
-    x_price=0
+    orderPrice_paymob=0
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         orderitems = order.orderitem_set.all()
-        print(order)
-        print(orderitems)
-        x_price+=order.get_total_price
+        orderPrice_paymob+=order.get_total_price
         
     else:
         try:
@@ -307,13 +347,20 @@ def checkoutView(request):
                 'price': price,
             }
             orderitems.append(item)
-        x_price+=order['get_total_price']
+        orderPrice_paymob+=order['get_total_price']
     
-    
-    r= requests.post("https://accept.paymob.com/api/auth/tokens",
-    json={
-        "api_key":config('PayMob_api')
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
     }
+
+    
+    r= requests.post(
+        "https://accept.paymob.com/api/auth/tokens",
+        json={
+            "api_key":config('PayMob_api')
+        },
+        headers=headers
     )
     first_token = r.json()['token']
 
@@ -324,7 +371,7 @@ def checkoutView(request):
             request_items.append(
                 {
                     "name": item['product']['name'],
-                    "amount_cents": item['price'],
+                    "amount_cents": item['price']*100,
                     "description": item['product']['name'],
                     "quantity": item['quantity']
                 }
@@ -333,7 +380,7 @@ def checkoutView(request):
             request_items.append(
                 {
                     "name": item.product.name,
-                    "amount_cents": item.price,
+                    "amount_cents": item.price*100,
                     "description": item.product.name,
                     "quantity": item.quantity
                 }
@@ -347,10 +394,11 @@ def checkoutView(request):
     json={
         "auth_token": first_token,
         "delivery_needed": "false",
-        "amount_cents": x_price,
+        "amount_cents": orderPrice_paymob*100,
         "currency": "EGP",
         "items": request_items,
-    }
+    },
+    headers=headers
     )
     order_id = r.json()['id']
 
@@ -363,24 +411,25 @@ def checkoutView(request):
         "order_id": order_id,
         "billing_data": {
             "apartment": "NA", 
-            "email": "claudette09@exa.com", 
+            "email": "wolfrine97@gmail.com", 
             "floor": "NA", 
-            "first_name": "Clifford", 
+            "first_name": "Ahmed", 
             "street": "NA", 
             "building": "NA", 
-            "phone_number": "+86(8)9135210487", 
+            "phone_number": "01065584023", 
             "shipping_method": "NA", 
             "postal_code": "NA", 
             "city": "NA", 
             "country": "NA", 
-            "last_name": "Nicolas", 
+            "last_name": "Mohamed", 
             "state": "NA"
         },
         "currency": "EGP", 
-        "integration_id": 2082053
-    }
+        "integration_id": 92460
+    },
+    headers=headers
     )
-    payment_token = order_id = r.json()['token']
+    payment_token = r.json()['token']
 
     context = {'orderitems':orderitems, 'order':order,'payment_token':payment_token}
     return render(request,'accounts/checkout.html',context)
@@ -391,7 +440,7 @@ def checkoutView(request):
 @require_POST
 def callBack(request):
     payload = json.loads(request.body)
-
+    print("PAYLOAD: ",payload)
     response = {
         'pending':payload['obj']['pending'],
         'success':payload['obj']['success']
@@ -399,7 +448,6 @@ def callBack(request):
     return HttpResponse('Recieved callback',response)
 
 def paymentResponse(request):
-    print("RESPONSE: ",request.GET)
     paymentStatus = request.GET['success']
     total_price = float(request.GET['amount_cents'])/100
     print("status: ",paymentStatus," price: ",total_price)

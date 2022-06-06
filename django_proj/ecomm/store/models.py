@@ -148,7 +148,7 @@ class Order(models.Model):
         return total
 
     def __str__(self):
-        return str(self.customer)
+        return str(self.id)+ " " + str(self.customer) 
 
 class OrderItem(models.Model): # get total @property function
     choices=[
@@ -170,7 +170,9 @@ class OrderItem(models.Model): # get total @property function
         return self.price/self.quantity
 
     def __str__(self):
-        return self.product.name
+        if not self.product:
+            return str(self.id)+ " " "DELETED"
+        return str(self.id)+ " " +self.product.name
 
 
 class ShippingAddress(models.Model):

@@ -1,0 +1,27 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex justify-content-start mb-5">
+    <a href="{% url 'customer-profile' %}">
+        <i class="bi bi-arrow-left ps-2"></i>
+    </a> 
+    <div class="ps-5">Profile</div>
+    
+</div>
+
+{% for address in addresses %}
+    <div class="card mb-5" style="width: 400px;">
+        <div class="card-body">
+            <h5 class="card-title">{{address.customer}}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Address: {{address.address}}</li>
+            <li class="list-group-item">City: {{address.city}}</li>
+            <li class="list-group-item">State: {{address.state}}</li>
+        </ul>
+    </div>
+{% endfor %}
+
+{% endblock content %}

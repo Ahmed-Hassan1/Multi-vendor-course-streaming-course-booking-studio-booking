@@ -1,0 +1,31 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex justify-content-start mb-5">
+    <a href="{% url 'customer-profile-orders' %}">
+        <i class="bi bi-arrow-left ps-2"></i>
+    </a> 
+    <div class="ps-5">Orders</div>   
+</div>
+
+{% for item in orderItems %}
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{item.product.imageURL}}" class="img-fluid rounded-start" alt="...">
+        </div>
+
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{item.product.name}}</h5>
+                <p class="card-text">x{{item.quantity}}</p>
+                <p class="card-text"><small class="text-muted">Price per item: {{item.price}}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %}

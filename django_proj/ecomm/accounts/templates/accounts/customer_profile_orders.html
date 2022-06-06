@@ -1,0 +1,39 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex justify-content-start mb-5">
+    <a href="{% url 'customer-profile' %}">
+        <i class="bi bi-arrow-left ps-2"></i>
+    </a> 
+    <div class="ps-5">Profile</div>
+    
+</div>
+
+<div>
+    {% for order in orders %}
+      <div class="card border-dark mb-3" style="max-width: 500px;">
+        <div class="card-header ">
+            <a class= "d-flex justify-content-between" href="{% url 'customer-profile-orders-details' order.id %}">
+                <div>
+                    Order ID: {{order.id}}
+                </div>
+                <i class="bi bi-arrow-right"></i>
+            </a>     
+        </div> 
+
+        <div class="card-body text-dark">
+            <h5 class="card-title">Items: {{order.get_total_items}}</h5>
+            {% for item in orderItems %}
+                {% if item.order == order %}
+                    <p class="card-text">Name: {{item}}  x{{item.quantity}}</p>
+                {% endif %}
+            {% endfor %}
+            <p class="card-text"><small class="text-muted">Total: {{order.get_total_price}}</small></p>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

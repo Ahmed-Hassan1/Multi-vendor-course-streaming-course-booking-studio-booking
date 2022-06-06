@@ -4,14 +4,14 @@
 {% block content %}
 
 <h1 class="mb-5 text-center">Create an Account</h1>
-
+{{ form.errors }}
 <form action="" method="post" class="container">
     {% csrf_token %}
     
     {% for input in form %}
     <div class="form-floating mb-3">
         {{input}}
-        <label for="floatingInput">{{input.label}}</label>
+        <label for="floatingInput">{{input.label }}  {% if input.field.required %}*{% endif %} </label>
     </div>
     {% endfor %}
 

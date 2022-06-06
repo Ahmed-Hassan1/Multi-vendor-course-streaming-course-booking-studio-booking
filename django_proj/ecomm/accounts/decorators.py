@@ -14,7 +14,6 @@ def unauthenticated_user(view_func):
 def allowed_user(roles=[]):
     def decorator(view_func):
         def wrapper(request,*args, **kwargs):
-            print('working',roles)
             
             if request.user.is_customer and roles[0]=='Customer':
                 return view_func(request,*args, **kwargs)

@@ -11,10 +11,12 @@ from store.models import Product,OrderItem
 class CustomerSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True,max_length=50)
     last_name = forms.CharField(required=True,max_length=50)
-    phone_number = forms.CharField(max_length=20)
+    email = forms.EmailField(required=True,max_length=50)
+    #phone_number = forms.CharField(required=False,max_length=20,)
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
+        fields=['email','password1','password2','phone_number']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -32,7 +34,6 @@ class CustomerSignUpForm(UserCreationForm):
         customer = Customer.objects.create(customuser=user)
         customer.first_name = self.cleaned_data.get('first_name')
         customer.last_name = self.cleaned_data.get('last_name')
-        customer.phone_number = self.cleaned_data.get('phone_number')
         customer.save()
         return customer.customuser
 
@@ -40,10 +41,12 @@ class VendorSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True,max_length=50)
     last_name = forms.CharField(required=True,max_length=50)
     company_name = forms.CharField(required=True,max_length=100)
-    phone_number = forms.CharField(max_length=20)
+    # phone_number = forms.CharField(required=True,max_length=20)
+    # email = forms.CharField(required=True,max_length=20)
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
+        fields=['email','password1','password2','phone_number']
 
 
     def __init__(self, *args, **kwargs):
@@ -55,6 +58,15 @@ class VendorSignUpForm(UserCreationForm):
             'placeholder':'password'
             })
 
+    # can be used to customize the error message for the forms
+    # def clean_phone_number(self):
+    #     phone=self.cleaned_data.get('phone_number')
+    #     if CustomUser.objects.filter(phone_number=phone).exists():
+    #         print('phone already exists')
+    #         raise forms.ValidationError('Phone Number already exists')
+    #     return phone
+
+
     def save(self):
         user = super().save(commit=False)
         user.is_vendor=True
@@ -63,8 +75,10 @@ class VendorSignUpForm(UserCreationForm):
         vendor.first_name = self.cleaned_data.get('first_name')
         vendor.last_name = self.cleaned_data.get('last_name')
         vendor.company_name = self.cleaned_data.get('company_name')
-        vendor.phone_number = self.cleaned_data.get('phone_number')
+        
         vendor.save()
+
+        
         
         #
         subject = vendor.company_name + ' is a new vendor'
@@ -76,6 +90,12 @@ class VendorSignUpForm(UserCreationForm):
         ['to@example.com']
         )
         return vendor.customuser
+
+class CustomUserProfileForm(ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['phone_number']
+
 
 class CustomerProfileForm(ModelForm):
 
@@ -105,15 +125,15 @@ class VendorPaymentsForm(forms.ModelForm):
 
     def clean_payments(self):
         payments=self.cleaned_data['payments']
-        x=self.data['vendor']
+        vendor_id=self.data['vendor']
         
-        orders = OrderItem.objects.all().filter(order__complete=True,product__vendor__customuser__id=x)
+        orders = OrderItem.objects.all().filter(order__complete=True,product__vendor__customuser__id=vendor_id)
         deliveredOrders = orders.filter(status = 'Delivered')
         deliveredSales = 0
         for item in deliveredOrders:
             deliveredSales+=item.price
 
-        vendorPayments = VendorPayments.objects.all().filter(vendor__customuser__id=x)
+        vendorPayments = VendorPayments.objects.all().filter(vendor__customuser__id=vendor_id)
         totalPayments=0
         for payment in vendorPayments:
             totalPayments+=payment.payments
