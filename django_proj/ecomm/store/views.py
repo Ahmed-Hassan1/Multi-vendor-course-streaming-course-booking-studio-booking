@@ -74,3 +74,6 @@ def productView(request,pk):
 #     return render(request,'store/ouds.html',context)
 
 
+def aboutUsView(request):
+
+    return render(request,'store/about_us.html')

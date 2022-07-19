@@ -86,8 +86,8 @@ class VendorSignUpForm(UserCreationForm):
         send_mail(
         subject,
         message,
-        'from@Admin.com',
-        ['to@example.com']
+        'monwork16@gmail.com',
+        ['monwork16@gmail.com']
         )
         return vendor.customuser
 
