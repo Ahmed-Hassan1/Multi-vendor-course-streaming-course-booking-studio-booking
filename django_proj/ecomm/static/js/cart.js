@@ -50,7 +50,9 @@ function addCookieItem(prodID,action,prodQuant)
     console.log(cart)
 
     document.cookie = 'cart='+ JSON.stringify(cart) + ";domian=;path=/"
-    location.reload()
+
+    setTimeout(function(){location.reload()},1000)
+    
 }
 
 function updateUserOrder(prodID,action,prodQuant)
@@ -71,7 +73,7 @@ function updateUserOrder(prodID,action,prodQuant)
     }).then((response)=>{
         return response.json()
     }).then((data)=>{
-        location.reload()
+        setTimeout(function(){location.reload()},1000)
     });
 }
 
