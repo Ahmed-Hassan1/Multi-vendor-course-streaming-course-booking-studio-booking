@@ -4,7 +4,7 @@
 {% block content %}
 
 <div>
-    <h1 class="text-center">Products</h1>
+    <h1 class="text-center">المنتجات</h1>
     <h3 class="text-center">{{user.vendor}}</h3>
 </div>
 
@@ -15,38 +15,38 @@
     {% with request.resolver_match.url_name as url_name %}
     <ul class="nav nav-pills justify-content-center mb-5">
         <li class="nav-item ">
-            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">لوحة التحكم</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">Orders</a>
+            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">الطلبات</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">Products</a>
+            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">المنتجات</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">Finances</a>
+            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">الحسابات</a>
         </li>
         
     </ul>
     {% endwith %}
 </div>
 
-<h1>Products</h1>
-<a href="{% url 'add-product' %}" class="btn btn-outline-primary">Add Product</a>
+<h1>المنتجات</h1>
+<a href="{% url 'add-product' %}" class="btn btn-outline-primary">اضف منتج</a>
 <table class="table table-striped">
     <thead>
-        <th>Name</th>
-        <th>Price</th>
-        <th>SubCat</th>
-        <th>Cat</th>
-        <th>Image</th>
-        <th>View Product</th>
-        <th>Activate</th>
-        <th>Modify Product</th>
-        <th>Delete Product</th>
+        <th>الاسم</th>
+        <th>السعر</th>
+        <th>تصنيف فرعى</th>
+        <th>الفئة</th>
+        <th>صورة</th>
+        <th>معاينة المنتج</th>
+        <th>تفعيل</th>
+        <th>تعديل النتج</th>
+        <th>مسح المنتج</th>
     </thead>
     <tbody>
         {% for product in products %}
@@ -56,16 +56,16 @@
             <td>{{product.subCategory}}</td>
             <td>{{product.category}}</td>
             <td><img class="row-image" src="{{product.imageURL}}"></td>
-            <td><a class="btn btn-outline-secondary" href="{% url 'product' product.slug %}">View</a></td>
+            <td><a class="btn btn-outline-secondary" href="{% url 'product' product.slug %}">معاينة</a></td>
             <td>
                 {% if product.activate %}
-                    <div class="bg-success">Activated</div>
+                    <div class="bg-success">مفعل</div>
                 {% else %}
-                    <div class="bg-secondary">De-activated</div>
+                    <div class="bg-secondary">محجوب</div>
                 {% endif %}
             </td>
-            <td><a class="btn btn-outline-primary" href="{% url 'dashboard-productsdetails' product.id %}">Modify</a></td>
-            <td><a class="btn btn-danger" href="{% url 'dashboard-productsdelete' product.id %}">DELETE</a></td>
+            <td><a class="btn btn-outline-primary" href="{% url 'dashboard-productsdetails' product.id %}">تعديل</a></td>
+            <td><a class="btn btn-danger" href="{% url 'dashboard-productsdelete' product.id %}">مسح</a></td>
         </tr>
         {% endfor %}
     </tbody>

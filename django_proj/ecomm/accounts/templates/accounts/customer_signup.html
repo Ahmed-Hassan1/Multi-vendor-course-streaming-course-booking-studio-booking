@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1 class="mb-5 text-center">Create an Account</h1>
+<h1 class="mb-5 text-center">انشاء حساب جديد</h1>
 {{ form.errors }}
 <form action="" method="post" class="container">
     {% csrf_token %}
@@ -15,7 +15,7 @@
     </div>
     {% endfor %}
 
-    <input type="submit" name="Create Account" class="width-100pc btn btn-outline-primary">
+    <input type="submit" value="انشاء حساب" name="Create Account" class="width-100pc btn btn-outline-primary">
 </form>
 
 

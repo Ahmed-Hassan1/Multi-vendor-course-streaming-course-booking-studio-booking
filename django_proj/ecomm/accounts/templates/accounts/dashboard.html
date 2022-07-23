@@ -4,7 +4,7 @@
 {% block content %}
 
 <div>
-    <h1 class="text-center">DASH BOARD</h1>
+    <h1 class="text-center">لوحة التحكم</h1>
     <h3 class="text-center">{{user.vendor}}</h3>
 </div>
 
@@ -15,19 +15,19 @@
     {% with request.resolver_match.url_name as url_name %}
     <ul class="nav nav-pills justify-content-center mb-5">
         <li class="nav-item ">
-            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">لوحة التحكم</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">Orders</a>
+            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">الطلبات</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">Products</a>
+            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">المنتجات</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">Finances</a>
+            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">الحسابات</a>
         </li>
         
     </ul>
@@ -43,11 +43,11 @@
         <div class="col-sm-6" >
             <div class="card">
                 <div class="card-header">
-                  New Orders
+                  الطلبات الجديدة
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">{{newOrders}}</h5>
-                  <a href="{% url 'dashboard-orders' %}" class="btn btn-primary">View Details</a>
+                  <a href="{% url 'dashboard-orders' %}" class="btn btn-primary">مشاهدة التفاصيل</a>
                 </div>
               </div>
         </div>
@@ -55,11 +55,11 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
-                  Pending Sales
+                  المبيعات قيد الانتظار
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">${{processingSales}}</h5>
-                  <a href="{% url 'dashboard-finances' %}" class="btn btn-primary">View Details</a>
+                  <a href="{% url 'dashboard-finances' %}" class="btn btn-primary">مشاهدة التفاصيل</a>
                 </div>
               </div>
         </div>
@@ -68,18 +68,18 @@
     
 </div>
 <br>
-    <h3>Recent Orders</h3>
+    <h3>الطلبات الحديثة</h3>
     <table class="table table-striped">
         <thead>
             <th>ID</th>
-            <th>OrderID</th>
-            <th>Customer</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Price</th>
-            <th>Product</th>
-            <th>Date</th>
-            <th>Status</th>
+            <th>رقم الطلب</th>
+            <th>العميل</th>
+            <th>الكمية</th>
+            <th>سعر الوحدة</th>
+            <th>السعر</th>
+            <th>المنتج</th>
+            <th>تاريخ الطلب</th>
+            <th>الحالة</th>
         </thead>
         <tbody>
             {% for order in recentOrders %}

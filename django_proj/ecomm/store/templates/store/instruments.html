@@ -5,7 +5,7 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">الرئيسية</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{subs}}</li>
     </ol>
 </nav>
@@ -24,7 +24,7 @@
     <div>
         <div class="d-flex justify-content-between align-items-center" style="background-color: #dce0e7;">
         <h2 class="text-center">{{subCat.name}}</h2>
-        <a class="p-2" href="{% url 'subCategory' subCat.name %}">SEE ALL</a>
+        <a class="p-2" href="{% url 'subCategory' subCat.name %}">عرض الكل</a>
         </div>
     </div>
 

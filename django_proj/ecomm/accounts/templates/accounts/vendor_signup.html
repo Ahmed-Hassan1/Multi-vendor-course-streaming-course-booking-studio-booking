@@ -3,19 +3,54 @@
 
 {% block content %}
 
-<h1 class="mb-5 text-center">Create a Vendor Account</h1>
+<h1 class="mb-5 text-center">انشاء حساب تاجر جديد</h1>
 {{ form.errors }}
 <form action="" method="post" class="container">
     {% csrf_token %}
     
-    {% for input in form %}
+    <!-- {% for input in form %}
     <div class="form-floating mb-3">
         {{input}}
         <label for="floatingInput">{{input.label }}  {% if input.field.required %}*{% endif %} </label>
     </div>
-    {% endfor %}
+    {% endfor %} -->
 
-    <input type="submit" name="Create Account" class="width-100pc btn btn-outline-primary">
+    <div class="form-floating mb-3">
+        {{form.email}}
+        <label for="floatingInput">الايميل  {% if form.email.field.required %}*{% endif %} </label>
+    </div>
+
+    <div class="form-floating mb-3">
+        {{form.password1}}
+        <label for="floatingInput">الباسورد  {% if form.password1.field.required %}*{% endif %} </label>
+    </div>
+
+    <div class="form-floating mb-3">
+        {{form.password2}}
+        <label for="floatingInput">تأكيد الباسورد  {% if form.password2.field.required %}*{% endif %} </label>
+    </div>
+
+    <div class="form-floating mb-3">
+        {{form.phone_number}}
+        <label for="floatingInput">رقم التليفون  {% if form.phonenumber.field.required %}*{% endif %} </label>
+    </div>
+
+    <div class="form-floating mb-3">
+        {{form.first_name}}
+        <label for="floatingInput">الاسم الاول  {% if form.first_name.field.required %}*{% endif %} </label>
+    </div>
+
+    <div class="form-floating mb-3">
+        {{form.last_name}}
+        <label for="floatingInput">الاسم الاخير  {% if form.last_name.field.required %}*{% endif %} </label>
+    </div>
+
+    <div class="form-floating mb-3">
+        {{form.company_name}}
+        <label for="floatingInput">اسم الشركة  {% if form.company_name.field.required %}*{% endif %} </label>
+    </div>
+
+    <input type="submit" name="Create Account" value="انشاء حساب" class="width-100pc btn btn-outline-primary">
 </form>
 
 

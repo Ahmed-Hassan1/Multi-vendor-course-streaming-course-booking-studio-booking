@@ -4,7 +4,7 @@
 {% block content %}
 
 <div>
-    <h1 class="text-center">Orders</h1>
+    <h1 class="text-center">الطلبات</h1>
     <h3 class="text-center">{{user.vendor}}</h3>
 </div>
 
@@ -15,54 +15,54 @@
     {% with request.resolver_match.url_name as url_name %}
     <ul class="nav nav-pills justify-content-center mb-5">
         <li class="nav-item ">
-            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">لوحة التحكم</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">Orders</a>
+            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">الطلبات</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">Products</a>
+            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">المنتجات</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">Finances</a>
+            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">الحسابات</a>
         </li>
         
     </ul>
     {% endwith %}
 </div>
 
-<h3>Orders Details</h3>
+<h3>تفاصيل الطلبات</h3>
 <ul class="list-group" style="max-width: 400px;">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Processing Orders
+        الطلبات قيد الانتظار
         <span class="badge bg-primary rounded-pill">{{processingOrders}}</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Shipping Orders
+        الطلبات قيد الشحن
         <span class="badge bg-primary rounded-pill">{{shippingOrders}}</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Delivered Orders
+        الطلبات المستلمة
         <span class="badge bg-primary rounded-pill">{{deliveredOrders}}</span>
     </li>
 </ul>
 
 <br>
-    <h3>Orders List</h3>
+    <h3>قائمة الطلبات</h3>
     <table class="table table-striped">
         <thead>
             <th>ID</th>
-            <th>OrderID</th>
-            <th>Customer</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Price</th>
-            <th>Product</th>
-            <th>Date</th>
-            <th>Status</th>
+            <th>رقم الطلب</th>
+            <th>العميل</th>
+            <th>الكمية</th>
+            <th>سعر الوحدة</th>
+            <th>السعر</th>
+            <th>المنتج</th>
+            <th>تاريخ الطلب</th>
+            <th>الحالة</th>
         </thead>
         <tbody>
             {% for order in orders %}

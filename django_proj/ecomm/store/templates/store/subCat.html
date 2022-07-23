@@ -6,7 +6,7 @@
 <div>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">الرئيسية</a></li>
       <li class="breadcrumb-item" ><a href="{% url 'instruments' subs.name %}">{{subs}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{subCat}}</li>
     </ol>
@@ -22,9 +22,9 @@
             <form name="myform" id ="myform" method="get">
               <select name="filter_by" onchange="submitform();" class="btn btn-outline-secondary">
                   <option selected>{{sorting}}</option>
-                  <option value="new">New Additions</option>
-                  <option value="HighToLow">Price Highest to Lowest</option>
-                  <option value="LowToHigh">Price Lowest to Highest</option>
+                  <option value="new">احدث الاضافات</option>
+                  <option value="HighToLow">السعر من الاعلى الى الاقل</option>
+                  <option value="LowToHigh">السعر من الاقل الى الاعلى</option>
               </select>
             </form>
           </div>
@@ -39,7 +39,7 @@
                   <h3>{{product.name}}</h3>
                   <div>{{product.price}}</div>
                 </a>
-                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary update-cart">Add to Cart</button>
+                <!-- <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary update-cart">Add to Cart</button> -->
             </div>
             {% endfor %}
         </div>

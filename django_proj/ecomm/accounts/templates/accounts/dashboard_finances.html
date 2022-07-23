@@ -4,7 +4,7 @@
 {% block content %}
 
 <div>
-    <h1 class="text-center">Finances</h1>
+    <h1 class="text-center">الحسابات</h1>
     <h3 class="text-center">{{user.vendor}}</h3>
 </div>
 
@@ -15,51 +15,51 @@
     {% with request.resolver_match.url_name as url_name %}
     <ul class="nav nav-pills justify-content-center mb-5">
         <li class="nav-item ">
-            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link {% if url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">لوحة التحكم</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">Orders</a>
+            <a class="nav-link {% if url_name == 'dashboard-orders' %}active{% endif %}" href="{% url 'dashboard-orders' %}">الطلبات</a>
         </li>
     
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">Products</a>
+            <a class="nav-link {% if url_name == 'dashboard-products' %}active{% endif %}" href="{% url 'dashboard-products' %}">المنتجات</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">Finances</a>
+            <a class="nav-link {% if url_name == 'dashboard-finances' %}active{% endif %}" href="{% url 'dashboard-finances' %}">الحسابات</a>
         </li>
         
     </ul>
     {% endwith %}
 </div>
 
-<h3>Finances Details</h3>
+<h3>تفاصيل الحسابات</h3>
 <ul class="list-group mb-5" style="max-width: 400px;">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Sales of orders still processing
+        المبيعات قيد الانتظار
         <span class="badge bg-primary rounded-pill">{{processingSales}}</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Sales of orders on delivery
+        المبيعات قيد الشحن
         <span class="badge bg-primary rounded-pill">{{shippingSales}}</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Sales of orders delievered
+        المبيعات المستلمة
         <span class="badge bg-primary rounded-pill">{{deliveredSales}}</span>
     </li>
 </ul>
 
-<h3>Payment Details</h3>
+<h3>تفاصيل المدفوعات</h3>
 <ul class="list-group" style="max-width: 400px;">
 
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Money In Account
+        الاموال فى الحساب
         <span class="badge bg-primary rounded-pill">{{moneyInAccount}}</span>
     </li>
 
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Total Payments
+        المدفوعات الكلية
         <span class="badge bg-primary rounded-pill">{{totalPayments}}</span>
     </li>
     

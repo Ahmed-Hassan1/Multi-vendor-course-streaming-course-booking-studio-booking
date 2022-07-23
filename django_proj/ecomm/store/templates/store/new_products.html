@@ -6,8 +6,8 @@
 <div>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">New</li>
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">الرئيسية</a></li>
+      <li class="breadcrumb-item active" aria-current="page">الجديد</li>
     </ol>
   </nav>
         
@@ -24,7 +24,7 @@
                   <h3>{{product.name}}</h3>
                   <div>{{product.price}}</div>
                 </a>
-                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary update-cart">Add to Cart</button>
+                <!-- <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary update-cart">اضافة الى السلة</button> -->
             </div>
             {% endfor %}
         </div>

@@ -7,15 +7,15 @@
     <div class="row">
         <div class="col">
             <div class="box-element">
-                <a  class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; Continue Shopping</a>
+                <a  class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; العودة للتسوق</a>
             </div>
     
             <table class="table">
                 <tr>
-                    <th><h5>Items: <strong>{{order.get_total_items}}</strong></h5></th>
-                    <th><h5>Total:<strong> ${{order.get_total_price}}</strong></h5></th>
+                    <th><h5>العدد: <strong>{{order.get_total_items}}</strong></h5></th>
+                    <th><h5>الاجمالى:<strong> EGP{{order.get_total_price}}</strong></h5></th>
                     <th>
-                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">الدفع</a>
                     </th>
                 </tr>
             </table>
@@ -25,10 +25,10 @@
             <div class="box-element">
                 <div class="cart-row">
                     <div style="flex:2"></div>
-                    <div style="flex:2"><strong>Item</strong></div>
-                    <div style="flex:1"><strong>Price</strong></div>
-                    <div style="flex:1"><strong>Quantity</strong></div>
-                    <div style="flex:1"><strong>Total</strong></div>
+                    <div style="flex:2"><strong>المنتج</strong></div>
+                    <div style="flex:1"><strong>السعر</strong></div>
+                    <div style="flex:1"><strong>الكمية</strong></div>
+                    <div style="flex:1"><strong>الاجمالى</strong></div>
                 </div>
                 {% for orderitem in orderitems %}
                 <div class="cart-row">

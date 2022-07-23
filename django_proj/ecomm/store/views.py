@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from .models import Product,CarouselBanner, SubCategory, Category
 
@@ -32,21 +33,21 @@ def instrumentView(request,pk):
     return render(request,'store/instruments.html',context)
 
 def subCatView(request,pk):
-    sorting='Sort By'
+    sorting='ترتيب حسب'
     subCat=SubCategory.objects.get(name=pk)
     subs=subCat.category   
     products = Product.objects.filter(subCategory__name=subCat) 
 
     if request.GET.get('filter_by')=='HighToLow':
         products = products.order_by('-price')
-        sorting='Price Highest to Lowest'
+        sorting='السعر من الاعلى الى الاقل'
 
     if request.GET.get('filter_by')=='LowToHigh':
         products = products.order_by('price')
-        sorting='Price Lowest to Highest'
+        sorting='السعر من الاقل الى الاعلى'
 
     if request.GET.get('filter_by')=='new':
-        sorting='New Additions'
+        sorting='احدث الاضافات'
     
     context = {'products':products,'subs':subs,'subCat':subCat,'sorting':sorting}
     return render(request,'store/subCat.html',context) 
@@ -57,21 +58,6 @@ def productView(request,pk):
     subs = product.category
     context={'product':product,'subs':subs,'subCat':subCat}
     return render(request,'store/product.html',context)
-
-# def oudView(request):
-#     if request.GET.get('filter_by')=='HighToLow':
-#         products = Product.objects.order_by('-price')
-#         context={'products':products}
-#         return render(request,'store/ouds.html',context)
-
-#     if request.GET.get('filter_by')=='LowToHigh':
-#         products = Product.objects.order_by('price')
-#         context={'products':products}
-#         return render(request,'store/ouds.html',context)
-    
-#     products = Product.objects.all()
-#     context={'products':products}
-#     return render(request,'store/ouds.html',context)
 
 
 def aboutUsView(request):

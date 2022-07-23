@@ -4,12 +4,12 @@
 {% block content %}
 
 <div class="container">
-    <h1>Welcome {{user.email}}</h1>
+    <h1>مرحبا {{user.email}}</h1>
     <ul class="list-group" style="max-width: 400px;">
         <a href="{% url 'customer-profile-details' %}">
             <li class="list-group-item">
                 <div class="d-flex justify-content-between">
-                    <div>Account Details</div>
+                    <div>تفاصيل الحساب</div>
                     <i class="bi bi-arrow-right"></i>
                 </div>  
             </li>
@@ -19,25 +19,25 @@
         <a href="{% url 'customer-profile-orders' %}">
             <li class="list-group-item">
                 <div class="d-flex justify-content-between">
-                    <div>Orders</div>
+                    <div>الطلبات</div>
                     <i class="bi bi-arrow-right"></i>
                 </div>  
             </li>
         </a>
     
-        <a href="">
+        <!-- <a href="">
             <li class="list-group-item">
                 <div class="d-flex justify-content-between">
                     <div>Address Book "Under Construction"</div>
                     <i class="bi bi-arrow-right"></i>
                 </div>  
             </li>
-        </a>
+        </a> -->
     
         <a href="">
             <li class="list-group-item">
                 <div class="d-flex justify-content-between">
-                    <div>Change Password</div>
+                    <div>تغيير الباسوورد</div>
                     <i class="bi bi-arrow-right"></i>
                 </div>  
             </li>
