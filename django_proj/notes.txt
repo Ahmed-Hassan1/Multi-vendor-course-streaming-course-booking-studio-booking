@@ -1,0 +1,12 @@
+Procfiles need gunicorn installed
+
+Create the super user
+
+02_createsuperuser:
+    command: "source /var/app/venv/*/bin/activate && python3 manage.py createsuperuser --noinput"
+    leader_only: true
+
+
+
+Just include it raw inside the code and environment vars
+

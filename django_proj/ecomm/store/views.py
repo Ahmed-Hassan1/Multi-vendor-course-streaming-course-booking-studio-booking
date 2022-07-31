@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.utils.translation import gettext as _
+import os
 
 from .models import Product,CarouselBanner, SubCategory, Category
 
@@ -11,7 +11,7 @@ def homeView(request):
     banners=CarouselBanner.objects.all()
     mainCats=Category.objects.all()
     context={'products':products,'banners':banners,'mainCats':mainCats}
-
+    print(os.environ)
     return render(request,'store/home.html',context)
 
 

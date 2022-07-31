@@ -1,7 +1,6 @@
-from dataclasses import fields
 from django import forms
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from .models import CustomUser, Customer, Vendor, VendorPayments
 from store.models import Product,OrderItem

@@ -1,4 +1,3 @@
-from tokenize import String
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 from django.utils.text import slugify
