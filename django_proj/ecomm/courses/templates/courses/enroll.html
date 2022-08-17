@@ -1,0 +1,12 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+    
+
+{% block content %}
+<h1>Enroll Confirmation and payment</h1>
+<form action="{% url 'course-enroll' %}" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Confirm">
+</form>
+{% endblock content %}

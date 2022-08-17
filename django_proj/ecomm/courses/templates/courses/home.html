@@ -1,0 +1,36 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Courses Catalogue</h1>
+
+{% for item in course_cats %}
+<div>
+    <h2>
+        <a href="{% url 'course-cat' item.name %}">{{item.name}}</a>
+    </h2>
+        
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for course in courses %}
+            {% if course.courseCategory == item  %}
+            <a href="{% url 'course' course.id %}">
+                <div class="col">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/400x400" class="card-img-top" alt="..."> 
+                        <div class="card-body">
+                        <h5 class="card-title">{{course.name}}</h5>
+                        <p class="card-text">{{course.description}}</p>
+                        <p class="card-text"><small class="text-muted">Price: {{course.price}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            {% endif %}
+        {% endfor %}
+      </div>
+</div>
+<br>
+{% endfor %}
+{% endblock content %}

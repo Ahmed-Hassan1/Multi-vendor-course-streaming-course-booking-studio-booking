@@ -11,7 +11,6 @@ def homeView(request):
     banners=CarouselBanner.objects.all()
     mainCats=Category.objects.all()
     context={'products':products,'banners':banners,'mainCats':mainCats}
-    print(os.environ)
     return render(request,'store/home.html',context)
 
 

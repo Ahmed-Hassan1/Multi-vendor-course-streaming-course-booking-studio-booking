@@ -56,7 +56,7 @@
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               
             {% if user.is_authenticated %}
-              <li><a class="dropdown-item" href="{% url 'signout' %}">تسجيل الخروج</a></li>
+              <li><a class="dropdown-item" href="{% url 'signout' %}?next={{request.path}}">تسجيل الخروج</a></li>
               {% if user.is_customer %}
               <li><a class="dropdown-item" href="{% url 'customer-profile' %}">الحساب</a></li>
               {% endif %}
@@ -65,7 +65,7 @@
               <li><a class="dropdown-item" href="{% url 'dashboard' %}">لوحة التحكم</a></li>
               {% endif %}
             {% else %}
-              <li><a class="dropdown-item" href="{% url 'signin' %}">تسجيل الدخول</a></li>
+              <li><a class="dropdown-item" href="{% url 'signin' %}?next={{request.path}}">تسجيل الدخول</a></li>
               <li><a class="dropdown-item" href="{% url 'customer-signup' %}">انشاء حساب</a></li>
               <li><a class="dropdown-item" href="{% url 'vendor-signup' %}">انشاء حساب تاجر</a></li>
             {% endif %}
@@ -101,7 +101,7 @@
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               
             {% if user.is_authenticated %}
-              <li><a class="dropdown-item" href="{% url 'signout' %}">تسجيل الخروج</a></li>
+              <li><a class="dropdown-item" href="{% url 'signout' %}?next={{request.path}}">تسجيل الخروج</a></li>
               {% if user.is_customer %}
               <li><a class="dropdown-item" href="{% url 'customer-profile' %}">الحساب</a></li>
               {% endif %}
@@ -110,7 +110,7 @@
               <li><a class="dropdown-item" href="{% url 'dashboard' %}">لوحة التحكم</a></li>
               {% endif %}
             {% else %}
-              <li><a class="dropdown-item" href="{% url 'signin' %}">تسجيل الدخول</a></li>
+              <li><a class="dropdown-item" href="{% url 'signin' %}?next={{request.path}}">تسجيل الدخول</a></li>
               <li><a class="dropdown-item" href="{% url 'customer-signup' %}">انشاء حساب</a></li>
               <li><a class="dropdown-item" href="{% url 'vendor-signup' %}">انشاء حساب تاجر</a></li>
             {% endif %}

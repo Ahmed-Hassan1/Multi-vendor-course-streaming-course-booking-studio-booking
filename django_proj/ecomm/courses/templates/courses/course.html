@@ -1,0 +1,80 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+    
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'courses-home' %}">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'course-cat' courseCat %}">{{courseCat}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{course.name}}</li>
+        </ol>
+    </nav>
+    <h1>{{courseCat}}</h1>
+    <h2>{{course.name}}</h2>
+    <p>{{course.description}}</p>
+    <h3>{{course.price}}</h3>
+    <h5>{{courseCat}}</h5>
+
+
+    <!-- Button trigger modal -->
+    {% if user.is_authenticated %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#course-enroll-form">
+        Enroll
+    </button>
+    {% else %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#course-enroll-form-confirmation">
+        Enroll
+    </button>
+    {% endif %}
+    <!-- Modal to enroll -->
+    <form action="{% url 'course-enroll' %}" method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="course-enroll-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden"  name="user" value="{{request.user.customer}}" id="price-post">
+                    <input type="hidden"  name="courseCat" value="{{courseCat}}" id="price-post">
+                    <input type="hidden"  name="course" value="{{course}}" id="price-post">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal for sign-in/sign-up -->
+    <div class="modal fade" id="course-enroll-form-confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You are not logged in
+            </div>
+            <div class="modal-footer">
+            <a href="{% url 'signin' %}?next={{request.path}}" class="btn btn-secondary">Sign-In</a>
+            <a href="{% url 'customer-signup' %}" class="btn btn-primary">Sign-up</a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    
+
+
+
+    <script>
+        $
+    </script>
+{% endblock content %}

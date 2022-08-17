@@ -48,9 +48,7 @@ def signInView(request):
         user = authenticate(request,username=email,password=password)
         if user is not None:
             login(request,user)
-            print('SUCCESS LOGIN')
-            return redirect('home')
-        print('FAIL LOGIN')
+            return redirect(request.GET['next'])
     context={}
     return render(request,'accounts/signin.html')
 
@@ -114,9 +112,8 @@ def customerProfilePasswordView(request):
 
 
 def signOutView(request):
-
     logout(request)
-    return redirect('home')
+    return redirect(request.GET['next'])
 
 @login_required(login_url='login')
 @allowed_user(roles=['Vendor'])

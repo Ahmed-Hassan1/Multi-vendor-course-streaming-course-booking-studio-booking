@@ -1,0 +1,17 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+    
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'courses-home' %}">الرئيسية</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{courseCat}}</li>
+        </ol>
+    </nav>
+    <p>some very brief intro</p>
+    {% for course in courses %}
+        <h2><a href="{% url 'course' course.id %}">{{course.name}}</a></h2>
+        <h3>{{course.price}}</h3>
+    {% endfor %}
+{% endblock content %}
