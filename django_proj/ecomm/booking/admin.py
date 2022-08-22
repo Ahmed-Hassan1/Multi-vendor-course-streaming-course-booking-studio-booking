@@ -6,7 +6,6 @@ from .form import OpenDateForm
 admin.site.register(Reservations)
 
 
-
 class OpenDatesAdmin(admin.ModelAdmin):
     form = OpenDateForm
 admin.site.register(OpenDates,OpenDatesAdmin)

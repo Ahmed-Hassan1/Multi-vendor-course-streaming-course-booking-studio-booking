@@ -6,7 +6,9 @@ from django.http import JsonResponse, HttpResponse
 # Create your views here.
 def Home(request):
 
-    return render(request,'booking/home.html')
+    context={}
+
+    return render(request,'booking/home.html',context)
 
 def book(request):
     opendates = OpenDates.objects.all()
