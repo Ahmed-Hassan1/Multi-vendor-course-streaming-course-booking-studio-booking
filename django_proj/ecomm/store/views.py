@@ -5,6 +5,10 @@ from .models import Product,CarouselBanner, SubCategory, Category
 
 # Create your views here.
 
+def mainPage(request):
+
+    return render(request,'store/main_page.html')
+
 #use Activate for product and is_activated for vendors in filter to show and hide
 def homeView(request):
     products = Product.objects.all().filter(vendor__is_activated=True,activate=True)[:8]

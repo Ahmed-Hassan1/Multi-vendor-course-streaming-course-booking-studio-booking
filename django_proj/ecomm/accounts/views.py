@@ -52,14 +52,14 @@ def signInView(request):
     context={}
     return render(request,'accounts/signin.html')
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Customer'])
 def customerProfileView(request):
     
     context={}
     return render(request,'accounts/customer_profile.html',context)
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Customer'])
 def customerProfileDetailsView(request):
 
@@ -77,7 +77,7 @@ def customerProfileDetailsView(request):
     return render(request,'accounts/customer_profile_details.html',context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Customer'])
 def customerProfileOrdersView(request):
     orders = Order.objects.all().filter(customer=request.user.customer)
@@ -86,7 +86,7 @@ def customerProfileOrdersView(request):
     return render(request,'accounts/customer_profile_orders.html',context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Customer'])
 def customerProfileOrdersDetailsView(request,pk):
     order = Order.objects.get(id=pk)
@@ -95,7 +95,7 @@ def customerProfileOrdersDetailsView(request,pk):
     return render(request,'accounts/customer_profile_orders_details.html',context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Customer'])
 def customerProfileAddressView(request):
     addresses = ShippingAddress.objects.all().filter(customer=request.user.customer)
@@ -103,7 +103,7 @@ def customerProfileAddressView(request):
     context={'addresses':addresses}
     return render(request,'accounts/customer_profile_address.html',context)
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Customer'])
 def customerProfilePasswordView(request):
 
@@ -115,7 +115,7 @@ def signOutView(request):
     logout(request)
     return redirect(request.GET['next'])
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor)
@@ -134,7 +134,7 @@ def dashboardView(request):
     return render(request,'accounts/dashboard.html',context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardOrdersView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')
@@ -152,7 +152,7 @@ def dashboardOrdersView(request):
     return render(request,'accounts/dashboard_orders.html',context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardOrderDetailsView(request,pk):
     
@@ -177,7 +177,7 @@ def dashboardOrderDetailsView(request,pk):
     return render(request,'accounts/dashboard_orderitemdetails.html',context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardProductsView(request):
     products=[]
@@ -188,7 +188,7 @@ def dashboardProductsView(request):
 
 
 #Modify the product
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardProductsDetailsView(request,pk):
     product = Product.objects.get(id=pk)
@@ -202,7 +202,7 @@ def dashboardProductsDetailsView(request,pk):
     return render(request,'accounts/dashboard_productDetails.html',context)
 
     
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardProductsDeleteView(request,pk):
     product = Product.objects.get(id=pk)
@@ -214,7 +214,7 @@ def dashboardProductsDeleteView(request,pk):
         
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def add_product(request):
     if request.method == 'POST':
@@ -233,7 +233,7 @@ def add_product(request):
 
 
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 @allowed_user(roles=['Vendor'])
 def dashboardFinancesView(request):
     #Money in account

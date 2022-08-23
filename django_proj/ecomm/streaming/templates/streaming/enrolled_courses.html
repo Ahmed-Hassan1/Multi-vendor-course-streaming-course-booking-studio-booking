@@ -1,0 +1,30 @@
+{% extends 'streaming/base.html' %}
+{% load static %}
+    
+
+{% block content %}
+<h1>Enrolled courses</h1>
+
+{% for course in enrolled %}
+    <p>name: {{course.course.name}}</p>
+    <p>category: {{course.course.courseCategory}}</p>
+    <p>description: {{course.course.description}}</p>
+    <p>{{course.course.image}}</p>
+    <p>Date: 
+        {% for x in subsrciption %}
+            {% if x.enrollment == course %}    
+                {{x.date}}
+            {% endif %}
+        {% endfor %}
+    </p>
+    <p>Expires: 
+        {% for x in subsrciption %}
+            {% if x.enrollment == course %}    
+                {{x.expire}}
+            {% endif %}
+        {% endfor %}
+    </p>
+    <a href="{% url 'lessons-list' course.course.id %}">Lessons</a>
+{% endfor %}
+
+{% endblock content %}

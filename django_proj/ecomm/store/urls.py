@@ -2,7 +2,8 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns=[
-    path('',views.homeView,name="home"),
+    path('',views.mainPage,name='main-page'),
+    path('home',views.homeView,name="home"),
     path('new-products',views.newView,name="new-products"),
     path('inst/<str:pk>/',views.instrumentView,name='instruments'),
     path('category/<str:pk>/',views.subCatView,name='subCategory'),

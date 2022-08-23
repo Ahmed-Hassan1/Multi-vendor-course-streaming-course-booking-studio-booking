@@ -1,0 +1,18 @@
+{% extends 'streaming/base.html' %}
+{% load static %}
+    
+
+{% block content %}
+<h1>Enrollment details and choosing a pyment option</h1>
+<p>{{course.name}}</p>
+<p>{{course.price}}</p>
+
+<form action="{% url 'streaming-enroll-complete' %}" method="post">
+    {% csrf_token %}
+
+    <input type="hidden" name="course-name" value="{{course.name}}">
+
+    <button type="submit">Pay</button>
+</form>
+
+{% endblock content %}
