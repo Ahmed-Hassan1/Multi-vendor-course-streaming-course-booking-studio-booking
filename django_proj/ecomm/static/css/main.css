@@ -165,3 +165,20 @@ h2{
 .video-size{
 	width: 75%;
 }
+
+.book-image{
+	max-width: 100%;
+	min-width: 100%;
+}
+
+@media (min-width:1000px){
+	.itm{
+		max-width: 25%;
+		min-width: 25%;
+	}
+
+	.book-image{
+		max-width: 50%;
+		min-width: 50%;
+	}
+}
