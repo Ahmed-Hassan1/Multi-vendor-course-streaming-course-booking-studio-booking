@@ -7,11 +7,15 @@
 <h2>{{course.name}}</h2>
 <br>
 {% for lesson in lessons %}
-    <p>{{lesson.position}}-{{lesson.name}}</p>
-    <p>
-        <video controls controlslist="[nodownload]" class="video-js" data-setup='{}' width="480">
-            <source src="{{lesson.video.url}}">
-        </video>
-    </p>
+    <div class="mb-5">   
+        <p class="h3">{{lesson.position}}-{{lesson.name}}</p>
+        <p>
+            <video controls controlslist="[nodownload]" class="video-js vjs-fluid" data-setup='{}' width="480">
+                <source src="{{lesson.video.url}}">
+            </video>
+        </p>
+    </div>
+    <hr>
+    
 {% endfor %}
 {% endblock content %}

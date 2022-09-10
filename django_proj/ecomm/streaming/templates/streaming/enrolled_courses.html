@@ -6,25 +6,26 @@
 <h1>Enrolled courses</h1>
 
 {% for course in enrolled %}
-    <p>name: {{course.course.name}}</p>
-    <p>category: {{course.course.courseCategory}}</p>
-    <p>description: {{course.course.description}}</p>
-    <p>{{course.course.image}}</p>
-    <p>Date: 
-        {% for x in subsrciption %}
-            {% if x.enrollment == course %}    
-                {{x.date}}
-            {% endif %}
-        {% endfor %}
-    </p>
-    <p>Expires: 
-        {% for x in subsrciption %}
-            {% if x.enrollment == course %}    
-                {{x.expire}}
-            {% endif %}
-        {% endfor %}
-    </p>
-    <a href="{% url 'lessons-list' course.course.id %}">Lessons</a>
+    <div class="border border-secondary p-3 mb-4">
+        <p class="display-4">Course: {{course.course.name}}</p>
+        <p>Category: {{course.course.courseCategory}}</p>
+        <p>Starting: 
+            {% for x in subsrciption %}
+                {% if x.enrollment == course %}    
+                    {{x.date}}
+                {% endif %}
+            {% endfor %}
+        </p>
+        <p>Expires: 
+            {% for x in subsrciption %}
+                {% if x.enrollment == course %}    
+                    {{x.expire}}
+                {% endif %}
+            {% endfor %}
+        </p>
+        <a href="{% url 'lessons-list' course.course.id %}">Go To Lessons -></a>
+    </div>
+    
 {% endfor %}
 
 {% endblock content %}

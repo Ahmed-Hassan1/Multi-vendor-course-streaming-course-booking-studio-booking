@@ -4,23 +4,23 @@
 
 {% block content %}
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb  mb-5">
             <li class="breadcrumb-item"><a href="{% url 'streaming-home' %}">الرئيسية</a></li>
             <li class="breadcrumb-item"><a href="{% url 'streaming-categories' courseCat %}">{{courseCat}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{course.name}}</li>
         </ol>
     </nav>
-    <h1>{{courseCat}}</h1>
-    <h2>{{course.name}}</h2>
+    <h1 class="display-1 mb-3">{{course.name}}</h1>
     <p>{{course.description}}</p>
-    <h3>{{course.price}}</h3>
-    <h5>{{courseCat}}</h5>
+    <p  class="display-6">Price: {{course.price}}</p>
     <br>
-        <p>{{lessons.0.name}}</p>
         <p>
-            <video controls controlslist="[nodownload]" class="video-js" data-setup='{}'>
-                <source src="{{lessons.0.video.url}}" >
-            </video>
+            <div class="video-size m-auto">
+                <video controls controlslist="[nodownload]" class="video-js vjs-fluid" data-setup='{}'>
+                    <source src="{{lessons.0.video.url}}" >
+                </video>
+            </div>
+            
         </p>
 
 
@@ -29,12 +29,12 @@
         {% if enrolled.user == user.customer %}
             <h2><a href="{% url 'streaming-enrolled' %}">Already enrolled Go to the course</a></h2>
         {% else %}
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#course-enroll-form">
+            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#course-enroll-form">
                 Enroll
             </button>
         {% endif %}
     {% else %}
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#course-enroll-form-confirmation">
+            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#course-enroll-form-confirmation">
                 Enroll
             </button>
         

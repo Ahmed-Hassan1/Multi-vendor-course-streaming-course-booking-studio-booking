@@ -1,13 +1,17 @@
 from django.shortcuts import render
-import os
-
 from .models import Product,CarouselBanner, SubCategory, Category
+from streaming.models import Course as Online_Courses
+from courses.models import Course as Courses
 
 # Create your views here.
 
 def mainPage(request):
+    products = Product.objects.all().filter(vendor__is_activated=True,activate=True)[:8]
+    online_courses = Online_Courses.objects.all()[0:8]
+    courses = Courses.objects.all()[0:8]
 
-    return render(request,'store/main_page.html')
+    context={'products':products,'online_courses':online_courses,'courses':courses}
+    return render(request,'store/main_page.html',context)
 
 #use Activate for product and is_activated for vendors in filter to show and hide
 def homeView(request):
