@@ -1,4 +1,6 @@
 assets/
 images/
 __pycache__/
+tailwind/
 .env
+settings.py
