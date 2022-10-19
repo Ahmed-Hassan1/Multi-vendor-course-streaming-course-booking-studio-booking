@@ -53,6 +53,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,null=True,blank=True,allow_unicode=True)
     price = models.FloatField()
+    description= models.TextField(null=True,blank=True)
     image = models.ImageField(null=True,blank=True)
     image2 = models.ImageField(null=True,blank=True)
     image3 = models.ImageField(null=True,blank=True)

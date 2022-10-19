@@ -26,7 +26,9 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('booking/',include('booking.urls')),
     path('courses/',include('courses.urls')),
-    path('streaming/',include('streaming.urls'))
+    path('streaming/',include('streaming.urls')),
+    path('api/',include('api.urls')),
+
 ]
 
 

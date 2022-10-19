@@ -38,5 +38,6 @@ admin.site.register(Vendor)
 class VendorPaymentsAdmin(admin.ModelAdmin):
     form = VendorPaymentsForm
     list_display = ['vendor','payments']
+    list_filter=('vendor',)
 
 admin.site.register(VendorPayments,VendorPaymentsAdmin)

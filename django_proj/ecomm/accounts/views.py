@@ -138,7 +138,6 @@ def dashboardView(request):
 @allowed_user(roles=['Vendor'])
 def dashboardOrdersView(request):
     orders = OrderItem.objects.all().filter(order__complete=True,product__vendor=request.user.vendor).order_by('-order__date')
-
     processingOrders = orders.filter(status='Processing').count()
     shippingOrders = orders.filter(status='Shipping').count()
     deliveredOrders = orders.filter(status='Delivered').count()
@@ -158,8 +157,10 @@ def dashboardOrderDetailsView(request,pk):
     
     orderitem = OrderItem.objects.get(id=pk)
     shipping = ShippingAddress.objects.filter(order=orderitem.order)
-    print(shipping[0].name)
-
+    if(shipping):
+        print(shipping[0].name)
+    else:
+        shipping = [{'name':'NA'}]
     form = OrderForm(instance = orderitem)
     
     if request.method == 'POST':
@@ -354,7 +355,7 @@ def checkoutView(request):
     r= requests.post(
         "https://accept.paymob.com/api/auth/tokens",
         json={
-            "api_key":config('PayMob_api')
+            "api_key":"TEST"
         },
         headers=headers
     )

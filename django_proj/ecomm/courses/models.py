@@ -43,3 +43,6 @@ class CourseStudent(models.Model):
     student = models.ForeignKey(Customer,on_delete=models.CASCADE,blank=True,null=True)
     course = models.ForeignKey(Course,blank=True,null=True,on_delete=models.CASCADE)
     session = models.ForeignKey(CourseSessions,on_delete=models.CASCADE,blank=True,null=True)
+
+    def __str__(self):
+        return self.student.first_name+" "+self.student.last_name + " enrolled In " + self.course.name
